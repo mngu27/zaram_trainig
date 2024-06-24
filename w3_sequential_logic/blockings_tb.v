@@ -1,10 +1,12 @@
 `define		CLKFREQ		100
-`define		SIMCYCLE	100
+`define		SIMCYCLE	10
 
 `include	"blockings.v"
 
 module blockings_tb;
-
+// --------------------------------------------------
+//	DUT Signals & Instantiate
+// --------------------------------------------------
 	wire	o_q_block;
 	wire	o_q_nonblock;
 	reg		i_d;
@@ -23,15 +25,25 @@ module blockings_tb;
 		.i_d				(i_d				),
 		.i_clk				(i_clk				)
 	);
-
+// --------------------------------------------------
+//	Clock
+// --------------------------------------------------
 	always #(500/`CLKFREQ) i_clk = ~i_clk;
 
+
+// --------------------------------------------------
+//	Tsak
+// --------------------------------------------------
 	task init;
 		begin
 			i_d = 0;
 			i_clk = 0;
 		end
 	endtask
+
+// --------------------------------------------------
+//	Test Stimulus
+// --------------------------------------------------
 
 	integer i, j, k, n;
 
