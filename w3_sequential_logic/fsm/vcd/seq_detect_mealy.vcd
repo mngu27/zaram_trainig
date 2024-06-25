@@ -1,0 +1,140 @@
+$date
+	Tue Jun 25 16:00:45 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module seq_detect_mealy_tb $end
+$var wire 1 ! o_out $end
+$var reg 1 " i_clk $end
+$var reg 1 # i_rstn $end
+$var reg 1 $ i_seq $end
+$var reg 256 % vcd_file [255:0] $end
+$var integer 32 & i [31:0] $end
+$var integer 32 ' j [31:0] $end
+$scope module u_seq_detect_mealy $end
+$var wire 1 " i_clk $end
+$var wire 1 # i_rstn $end
+$var wire 1 $ i_seq $end
+$var reg 2 ( CurrentState [1:0] $end
+$var reg 2 ) NextState [1:0] $end
+$var reg 1 ! o_out $end
+$var reg 1 * seq $end
+$upscope $end
+$scope task init $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+0*
+b1 )
+b0 (
+bx '
+bx &
+b10111000101111011101100110001101100100001011110111001101100101011100010101111101100100011001010111010001100101011000110111010001011111011011010110010101100001011011000111100100101110011101100110001101100100 %
+0$
+0#
+0"
+0!
+$end
+#1000
+b110 '
+b0 &
+1#
+#5000
+b1 (
+1"
+#7000
+1$
+#10000
+0"
+#11000
+b0 '
+b1 &
+#15000
+1!
+b0 )
+1*
+1"
+#20000
+0"
+#21000
+b101 '
+b10 &
+#25000
+0!
+b0 (
+1"
+#30000
+0"
+#31000
+b10 '
+b11 &
+#33000
+0$
+#35000
+b1 )
+0*
+1"
+#40000
+0"
+#41000
+b101 '
+b100 &
+#45000
+b1 (
+1"
+#46000
+1$
+#50000
+0"
+#51000
+b1000 '
+b101 &
+#55000
+1!
+b0 )
+1*
+1"
+#60000
+0"
+#61000
+b1010 '
+b110 &
+#65000
+0!
+b0 (
+1"
+#70000
+0"
+#71000
+b111 &
+0$
+#75000
+b1 )
+0*
+1"
+#80000
+0"
+#81000
+b100 '
+b1000 &
+#85000
+b1 (
+1"
+#90000
+0"
+#91000
+b1010 '
+b1001 &
+#95000
+1"
+#100000
+0"
+#101000
+b1010 &
+1$
