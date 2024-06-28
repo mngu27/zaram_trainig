@@ -4,7 +4,7 @@
 `include "bin_to_gray.v"
 `include "gray_to_bin.v"
 
-module test;
+module bin_gray_tb;
 //---------------------------------------------------
 // DUT Signals & Intanciate
 //---------------------------------------------------
@@ -49,7 +49,7 @@ end
 			$dumpfile(vcd_file);
 			$dumpvars;
 		end else begin
-			$dumpfile("bin_to_gray_tb.vcd");
+			$dumpfile("bin_gray_tb.vcd");
 			$dumpvars;
 		end
 	end

@@ -1,5 +1,5 @@
 $date
-	Fri Jun 28 13:19:31 2024
+	Fri Jun 28 15:04:17 2024
 $end
 $version
 	Icarus Verilog
@@ -7,7 +7,7 @@ $end
 $timescale
 	1ps
 $end
-$scope module test $end
+$scope module bin_gray_tb $end
 $var wire 3 ! o_data_gray [2:0] $end
 $var wire 3 " o_data_bin [2:0] $end
 $var reg 3 # i_data [2:0] $end
