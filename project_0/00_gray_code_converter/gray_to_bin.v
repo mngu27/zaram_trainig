@@ -1,11 +1,20 @@
 module gray_to_bin
+#(
+	parameter BW_DATA = 8
+)
 (
-	input	[2:0]	i_data,
-	output	[2:0]	o_data
+	input	[BW_DATA-1:0]	i_data,
+	output	[BW_DATA-1:0]	o_data
 );
 
+assign o_data[BW_DATA-1] = i_data[BW_DATA -1];
 
-assign o_data[0] = o_data[1] ^ i_data[0];
-assign o_data[1] = o_data[2] ^ i_data[1];
-assign o_data[2] = i_data[2];
+genvar i;
+generate 
+	for(i = 0; i < BW_DATA-1; i = i +1) begin
+		assign o_data[i] = o_data[i+1] ^ i_data[i];
+	end
+endgenerate
+
+
 endmodule

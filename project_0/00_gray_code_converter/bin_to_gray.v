@@ -1,33 +1,20 @@
 module bin_to_gray
 #(
-	parameter N = 8
+	parameter BW_DATA = 8
 )
 (
-	input	[N-1:0]	i_data,
-	output	[N-1:0]	o_data
+	input	[BW_DATA-1:0]	i_data,
+	output	[BW_DATA-1:0]	o_data
 );
 
 
-assign o_data[N-1] = i_data[N-1];
+assign o_data[BW_DATA-1] = i_data[BW_DATA -1];
 
 genvar i;
-
 generate 
-	for(i = 0; i < N-1; i++) begin
+	for(i = 0; i < BW_DATA-1; i = i +1) begin
 		assign o_data[i] = i_data[i+1] ^ i_data[i];
 	end
 endgenerate
-
-
-
-
-
-
-
-/*
-assign o_data[0] = i_data[1] ^ i_data[0];
-assign o_data[1] = i_data[2] ^ i_data[1];
-assign o_data[2] = i_data[2];
-*/
 
 endmodule

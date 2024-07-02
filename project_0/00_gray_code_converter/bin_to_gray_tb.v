@@ -8,11 +8,16 @@ module bin_gray_tb;
 //---------------------------------------------------
 // DUT Signals & Intanciate
 //---------------------------------------------------
-	reg		[2:0]	i_data;
-	wire	[2:0]	o_data_bin;
-	wire	[2:0]	o_data_gray;
+	parameter 	BW_DATA = 8;
+
+	reg			[BW_DATA-1:0]	i_data;
+	wire		[BW_DATA-1:0]	o_data_bin;
+	wire		[BW_DATA-1:0]	o_data_gray;
 
 	bin_to_gray
+	#(
+		.BW_DATA			(BW_DATA			)
+	)
 	u_bin_to_gray(
 		.i_data				(i_data				),
 		.o_data				(o_data_gray		)
@@ -20,10 +25,16 @@ module bin_gray_tb;
 
 
 	gray_to_bin
-	u_gray_to_bin(
+	#(
+		.BW_DATA			(BW_DATA			)
+	)
+	u_gray_to_bin
+	(
 		.i_data				(o_data_gray		),
 		.o_data				(o_data_bin			)
 	);
+
+
 
 
 //---------------------------------------------------

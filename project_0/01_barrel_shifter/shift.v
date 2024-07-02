@@ -1,9 +1,10 @@
-module shift(
-	input			en,
-	input	[3:0]	i_data,
-	output	[3:0]	o_data
+module mux(
+	input		i_sel,
+	input		i_data0,
+	input		i_data1,
+	output		o_data
 );
 
-assign o_data = (en == 1) ? {i_data[3], i_data[2:0] } : i_data;
+assign o_data = (i_sel == 1) ? i_data1 : i_data0;
 
 endmodule

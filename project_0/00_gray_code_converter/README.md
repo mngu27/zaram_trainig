@@ -12,31 +12,50 @@
 ## Verilog Code
 ### DUT
 ```verilog
-	module gray_to_bin
-	(
-	input	[2:0]	i_data,
-	output	[2:0]	o_data
-	);
+	
+module gray_to_bin
+#(
+	parameter BW_DATA = 8
+)
+(
+	input	[BW_DATA-1:0]	i_data,
+	output	[BW_DATA-1:0]	o_data
+);
+
+assign o_data[BW_DATA-1] = i_data[BW_DATA -1];
+
+genvar i;
+generate 
+	for(i = 0; i < BW_DATA-1; i = i +1) begin
+		assign o_data[i] = o_data[i+1] ^ i_data[i];
+	end
+endgenerate
 
 
-	assign o_data[0] = o_data[1] ^ i_data[0];
-	assign o_data[1] = o_data[2] ^ i_data[1];
-	assign o_data[2] = i_data[2];
-
-	endmodule
+endmodule
 ```
 ```verilog
-	module bin_to_gray
-	(
-	input	[2:0]	i_data,
-	output	[2:0]	o_data
-	);
 
-	assign o_data[0] = i_data[1] ^ i_data[0];
-	assign o_data[1] = i_data[2] ^ i_data[1];
-	assign o_data[2] = i_data[2];
+module bin_to_gray
+#(
+	parameter BW_DATA = 8
+)
+(
+	input	[BW_DATA-1:0]	i_data,
+	output	[BW_DATA-1:0]	o_data
+);
 
-	endmodule
+
+assign o_data[BW_DATA-1] = i_data[BW_DATA -1];
+
+genvar i;
+generate 
+	for(i = 0; i < BW_DATA-1; i = i +1) begin
+		assign o_data[i] = i_data[i+1] ^ i_data[i];
+	end
+endgenerate
+
+endmodule
 ```
 
 ### Testbench
@@ -101,3 +120,7 @@ end
 endmodule
 ```
 ## Simulation Result
+-	@ first
+	- idata = 4 	-> gray = 110
+	- gray  = 110 	-> bin  = 100
+
