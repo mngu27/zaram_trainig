@@ -55,7 +55,7 @@ task ALU_function;
 		i_f = 0;
 		#(1000/`CLKFREQ);
 		for(i = 0; i < 7; i = i +1) begin
-			i_f = i_f + 3'b001;
+			i_f = $urandom;
 			#(1000/`CLKFREQ);
 		end
 	end
@@ -158,6 +158,7 @@ integer j;
 
 initial begin
 	init();
+	#(1000/`CLKFREQ);
 	for (j=0; j<`SIMCYCLE; j++) begin
 		i_a = i_a + 1;
 		i_b = i_b + 2;

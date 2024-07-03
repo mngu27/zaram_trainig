@@ -86,11 +86,6 @@ module ALU
 		.i_d				(w_y5				),
 		.o_y				(o_y				)
 	);
-
-
-
-
-
     
 endmodule 
 
