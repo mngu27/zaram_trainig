@@ -25,9 +25,9 @@ reg	[8*32-1:0] taskState;
 
 task init;
 	begin
-		taskState = "Init";
-		shift_amount = 0;
-		i_data = 0;
+		taskState 		= "Init";
+		shift_amount 	= 0;
+		i_data 			= 0;
 	end
 endtask
 
@@ -40,8 +40,8 @@ initial begin
 	init();
 
 	for (i=0; i<`SIMCYCLE; i++) begin
-		i_data = $urandom;
-		shift_amount = $urandom;
+		i_data 			= $urandom;
+		shift_amount 	= $urandom;
 		#(500/`CLKFREQ);
 	end
 	#(1000/`CLKFREQ);

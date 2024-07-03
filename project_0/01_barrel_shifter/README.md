@@ -144,9 +144,9 @@ reg	[8*32-1:0] taskState;
 
 task init;
 	begin
-		taskState = "Init";
-		shift_amount = 0;
-		i_data = 0;
+		taskState 		= "Init";
+		shift_amount 	= 0;
+		i_data 			= 0;
 	end
 endtask
 
@@ -159,8 +159,8 @@ initial begin
 	init();
 
 	for (i=0; i<`SIMCYCLE; i++) begin
-		i_data = $urandom;
-		shift_amount = $urandom;
+		i_data 			= $urandom;
+		shift_amount 	= $urandom;
 		#(500/`CLKFREQ);
 	end
 	#(1000/`CLKFREQ);
@@ -184,6 +184,11 @@ end
 endmodule
 ```
 ## Simulation Result
-
+- @ 10ns
+	- i_data = 0000_1101, k = 5 -> result = 0110_1000
+- @ 15ns
+	- i_data = 0110_0101, k = 2 -> result = 0101_1001
+- @ 20ns
+	- i_data = 0000_0001, k = 5 -> result = 0000_1000
 ![Waveform0](./test_waveform.png)
 
