@@ -6,9 +6,7 @@
 
 # Verilog Code
 ### DUT
-
-	```verilog
-
+```verilog
 module barrel_shifter(
 	input	[2:0]	k,
 	input	[7:0]	i_data,
@@ -114,10 +112,10 @@ module mux(
 assign o_data = (i_sel == 1) ? i_data1 : i_data0;
 
 endmodule
-	```
+```
 
 ### Testbench
-	```verilog
+```verilog
 
 `define		CLKFREQ		100
 `define		SIMCYCLE	100
@@ -184,7 +182,7 @@ end
 	end
 
 endmodule
-	```
+```
 ## Simulation Result
 
 ![Waveform0](./test_waveform.png)
