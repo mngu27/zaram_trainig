@@ -13,7 +13,7 @@ module barrel_shifter_tb;
 
 	barrel_shifter
 	u_barrel_shifter(
-		.shift_amount		(shift_amount		),
+		.k					(shift_amount		),
 		.i_data				(i_data				),
 		.o_data				(o_data				)
 	);
@@ -30,10 +30,6 @@ task init;
 		i_data = 0;
 	end
 endtask
-
-
-
-
 
 //---------------------------------------------------
 //Stimulus

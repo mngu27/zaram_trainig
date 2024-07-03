@@ -1,5 +1,5 @@
 $date
-	Tue Jul  2 17:07:40 2024
+	Wed Jul  3 13:37:33 2024
 $end
 $version
 	Icarus Verilog
@@ -16,7 +16,7 @@ $var reg 256 % vcd_file [255:0] $end
 $var integer 32 & i [31:0] $end
 $scope module u_barrel_shifter $end
 $var wire 8 ' i_data [7:0] $end
-$var wire 3 ( shift_amount [2:0] $end
+$var wire 3 ( k [2:0] $end
 $var wire 8 ) y_data [7:0] $end
 $var wire 8 * w_data [7:0] $end
 $var wire 8 + o_data [7:0] $end
