@@ -1,10 +1,12 @@
-#8-bit Barrel Shifter
+# 8-bit Barrel Shifter
 ## Operation Principle
 	- rotate amount depends on k.
 	- then right shift A
 	- Ex) A = 0100, k = 2 it means that 2bit right shift -> result : 0001
 
-#Verilog Code
+# Verilog Code
+### DUT
+
 	```verilog
 
 module barrel_shifter(
@@ -114,7 +116,7 @@ assign o_data = (i_sel == 1) ? i_data1 : i_data0;
 endmodule
 	```
 
-###Testbench
+### Testbench
 	```verilog
 
 `define		CLKFREQ		100
