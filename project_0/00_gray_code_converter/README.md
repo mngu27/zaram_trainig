@@ -144,3 +144,4 @@ endmodule
 	- gray  = 0000_1101 	-> bin  = 0000_1001
 
 ![Waveform0] (./test_waveform.png)
+
