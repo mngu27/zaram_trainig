@@ -60,22 +60,27 @@ endmodule
 
 ### Testbench
 ```verilog
-	
+
 `define		CLKFREQ		100
 `define		SIMCYCLE	100
 
 `include "bin_to_gray.v"
 `include "gray_to_bin.v"
 
-module test;
+module bin_gray_tb;
 //---------------------------------------------------
 // DUT Signals & Intanciate
 //---------------------------------------------------
-	reg		[2:0]	i_data;
-	wire	[2:0]	o_data_bin;
-	wire	[2:0]	o_data_gray;
+	parameter 	BW_DATA = 8;
+
+	reg			[BW_DATA-1:0]	i_data;
+	wire		[BW_DATA-1:0]	o_data_bin;
+	wire		[BW_DATA-1:0]	o_data_gray;
 
 	bin_to_gray
+	#(
+		.BW_DATA			(BW_DATA			)
+	)
 	u_bin_to_gray(
 		.i_data				(i_data				),
 		.o_data				(o_data_gray		)
@@ -83,10 +88,16 @@ module test;
 
 
 	gray_to_bin
-	u_gray_to_bin(
+	#(
+		.BW_DATA			(BW_DATA			)
+	)
+	u_gray_to_bin
+	(
 		.i_data				(o_data_gray		),
 		.o_data				(o_data_bin			)
 	);
+
+
 
 
 //---------------------------------------------------
@@ -112,15 +123,24 @@ end
 			$dumpfile(vcd_file);
 			$dumpvars;
 		end else begin
-			$dumpfile("bin_to_gray_tb.vcd");
+			$dumpfile("bin_gray_tb.vcd");
 			$dumpvars;
 		end
 	end
 
 endmodule
+
+
 ```
 ## Simulation Result
--	@ first
-	- idata = 4 	-> gray = 110
-	- gray  = 110 	-> bin  = 100
+-	@ 0ns
+	- idata = 8'h24(8'b0010_0100) 	-> gray = 0011_0110
+	- gray  = 0011_0110 	-> bin  = 0010_0100
+	@5ns
+	- idata = 8'h81(8'b1000_0001) 	-> gray = 1100_0001
+	- gray  = 1100_0001 	-> bin  = 1000_0001
+	@10ns
+	- idata = 8'h09(8'b0000_1001) 	-> gray = 0000_1101
+	- gray  = 0000_1101 	-> bin  = 0000_1001
 
+![Waveform0] (./test_waveform.png)
