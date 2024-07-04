@@ -5,6 +5,7 @@
 		- Load = 0
 		- input Sin -> ouput Q[7:0]
 		- Sin = 1 -> Q = 0b0001 , after 1clk Sin = 0 -> Q = 0b0010
+
 	- Parallel to serial converter
 		- 1st clk : laod = 1, other clk : load = 0
 		- input D[7:0] -> output Sout

@@ -1,12 +1,15 @@
 # FSM : Traffic Light Controller
 ## Operation Principle
  - use two FSM module
+
 ![capture1](./capture1.PNG)
+
  - Light FSM
  	- Traffic Sensor : TA, TB(that means there is a traffic)
 	- TA is on -> LA(light A) is a green and LB(light B) is a red
  - Mode FSM
  ![capture2](./capture2.PNG)
+
  	- P = 1 : enter parade Mode & LB is green
 	- R = 1 : leave parade Mode
 ## Verilog Code
