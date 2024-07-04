@@ -1,8 +1,8 @@
 ### SRAM Extension
 ## Operation Principle
 	- single port sram 
-	 	- chip_enable && write_enable is high -> write a data in input address
-	 	- chip_enable && out_enable is high and write_enable is low -> read a data in input address
+	 	- chip_enable && write_enable is high 							-> write a data in input address
+	 	- chip_enable && out_enable is high and write_enable is low 	-> read a data in input address
 	 	- can choose synchronous or asynchronous memory_read
 	- sram unit is 4-bit address & 32bit data
 	- target memory is 6bit address & 64bit data
