@@ -83,7 +83,6 @@ module CLA(
 endmodule
 
 
-
 module CLA_4bit_block(
 	input	[3:0]	i_a,
 	input	[3:0]	i_b,
@@ -106,10 +105,6 @@ module CLA_4bit_block(
 		.i_c				(i_c				),
 		.o_s				(o_s				)
 	);
-
-
-
-
 endmodule
 
 module pg(
