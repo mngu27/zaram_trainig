@@ -430,4 +430,4 @@ endmodule
 	- @ 400ns
 		- f = 3'd4 -> i_a & (~i_b) -> 0000_0001
 
-![Waveform0] (./test_waveform.png)
+![Waveform0](./test_waveform.png)
