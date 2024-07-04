@@ -130,7 +130,7 @@ generate
 endgenerate
 
 assign P = &p;
-assign G = g[3] | (p[3] & (g[2] | p[2] & (g[1] | (p[1] & g[1]))));
+assign G = g[3] | (p[3] & (g[2] | p[2] & (g[1] | (p[1] & g[0]))));
 
 assign o_c = G | (P & i_c);
 

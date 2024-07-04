@@ -1,13 +1,11 @@
 WARNING: CLA_tv_tb.v:64: $sformat has 1 extra argument(s).
 VCD info: dumpfile ./vcd/CLA_tv.vcd opened for output.
 WARNING: CLA_tv_tb.v:64: $sformat has 1 extra argument(s).
-[Idx: =] Mismatched o_s 1
 WARNING: CLA_tv_tb.v:64: $sformat has 1 extra argument(s).
 WARNING: CLA_tv_tb.v:64: $sformat has 1 extra argument(s).
 WARNING: CLA_tv_tb.v:64: $sformat has 1 extra argument(s).
 WARNING: CLA_tv_tb.v:64: $sformat has 1 extra argument(s).
 WARNING: CLA_tv_tb.v:64: $sformat has 1 extra argument(s).
-[Idx: =] Mismatched o_c 6
 WARNING: CLA_tv_tb.v:64: $sformat has 1 extra argument(s).
 WARNING: CLA_tv_tb.v:64: $sformat has 1 extra argument(s).
 WARNING: CLA_tv_tb.v:64: $sformat has 1 extra argument(s).
