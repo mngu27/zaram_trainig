@@ -1,3 +1,99 @@
+# 8-bit Shift Register
+## Operation Principle
+	- Serial to parallel converter
+		- Load = 0
+		- input Sin -> ouput Q[7:0]
+		- Sin = 1 -> Q = 0b0001 , after 1clk Sin = 0 -> Q = 0b0010
+	- Parallel to serial converter
+		- 1st clk : laod = 1, other clk : load = 0
+		- input D[7:0] -> output Sout
+		- D = 0x01 -> Sout = 0 0 0 0 0 0 0 1 
+## Verilog Code
+### DUT
+```verilog 
+module shift_register(
+	input				i_clk,
+	input				i_rstn,
+	input				i_load,
+	input		[7:0]	i_d,
+	input 				i_s,
+	output		[7:0]	o_q,	
+	output				o_s
+);
+
+	wire		[7:0] 	w_out;
+
+	mux2to1
+	u_mux2to1_0(
+		.i_sel				(i_load				),
+		.i_data0			(i_s				),
+		.i_data1			(i_d[0]				),
+		.o_data				(w_out[0]			)
+	);
+
+	dff
+	u_dff0(
+		.i_clk				(i_clk				),
+		.i_rstn				(i_rstn				),
+		.i_data				(w_out[0]			),
+		.o_data				(o_q[0]				)
+	);
+
+genvar i;
+generate
+	for(i = 0; i < 7; i = i + 1) begin
+	mux2to1
+	u_mux2to1(
+		.i_sel				(i_load				),
+		.i_data0			(o_q[i]				),
+		.i_data1			(i_d[i+1]			),
+		.o_data				(w_out[i+1]			)
+	);
+		dff
+	u_dff(
+		.i_clk				(i_clk				),
+		.i_rstn				(i_rstn				),
+		.i_data				(w_out[i+1]			),
+		.o_data				(o_q[i+1]			)
+	);
+end
+endgenerate
+
+	assign o_s = o_q[7];
+
+endmodule
+
+
+module mux2to1(
+	input		i_sel,
+	input		i_data0,
+	input		i_data1,
+	output		o_data
+);
+
+assign o_data = (i_sel) ? i_data1 : i_data0;
+
+endmodule
+
+module dff(
+	input			i_clk,
+	input			i_rstn,
+	input			i_data,
+	output reg		o_data
+);
+
+always @(posedge i_clk or negedge i_rstn) begin
+	if(!i_rstn) begin
+		o_data <= 0;
+	end
+	else begin
+		o_data <= i_data;
+	end
+end
+
+endmodule
+```
+### Testbench
 //-------------------------------------
 // Define Global Variables
 // ------------------------------------
@@ -118,3 +214,44 @@ end
 	end
 
 endmodule
+```
+## Simulation
+	- @35ns
+		- i_d = 0x24 = 0b0010_0100 
+	- @45ns
+		- o_s = 0
+	- @55ns
+		- o_s = 0
+	- @65ns
+		- o_s = 1
+	- @75ns
+		- o_s = 0
+	- @85ns
+		- o_s = 0
+	- @95ns
+		- o_s = 1
+	- @105ns
+		- o_s = 0
+	- @115ns
+		- o_s = 0
+	- @125ns
+		- i_s = 1 
+	- @135ns
+		- o_q = 0b0000_0001 // i_s = 0
+	- @145ns
+		- o_q = 0b0000_0010 // i_s = 0
+	- @155ns
+		- o_q = 0b0000_0100 // i_s = 0
+	- @165ns
+		- o_q = 0b0000_1000 // i_s = 0
+	- @175ns
+		- o_q = 0b0001_0000 // i_s = 0
+	- @185ns
+		- o_q = 0b0010_0000 // i_s = 0
+	- @195ns
+		- o_q = 0b0100_0000 // i_s = 1
+	- @195ns
+		- o_q = 0b1000_0001
+
+
+![Waveform0](./test_waveform.png)
