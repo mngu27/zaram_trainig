@@ -1,11 +1,11 @@
 ### SRAM Extension
 ## Operation Principle
 	- single port sram 
-	 - chip_enable && write_enable is high -> write a data in input address
-	 - chip_enable && out_enable is high and write_enable is low -> read a data in input address
-	 - can choose synchronous or asynchronous memory_read
+	 	- chip_enable && write_enable is high -> write a data in input address
+	 	- chip_enable && out_enable is high and write_enable is low -> read a data in input address
+	 	- can choose synchronous or asynchronous memory_read
 	- sram unit is 4-bit address & 32bit data
-	- target : 6bit address & 64bit
+	- target memory is 6bit address & 64bit data
 ## Verilog Code
 ### DUT
 ```verilog 
@@ -341,9 +341,14 @@ endmodule
 
 	- @640ns 
 		- i_addr = 'd64 // i_data = 0x8000_0000_...
+
+		-> write @645ns 
 	
 ![Waveform1](./test_waveform1.png)
+
 	- @1285ns
+		-> read data
+
 		- i_addr = 'd64 // o_data = 0x8000_0000_...
 
 
