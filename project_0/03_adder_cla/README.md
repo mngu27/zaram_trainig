@@ -357,5 +357,5 @@ fh_i_c.close()
 	
 	-> ... result : o_s[31:0] = 0x0D44_FC62, o_c = 1
 
-![Waveform0] (./test_waveform1.png)
-![Waveform0] (./test_waveform.png)
+![Waveform0](./test_waveform1.png)
+![Waveform0](./test_waveform.png)
