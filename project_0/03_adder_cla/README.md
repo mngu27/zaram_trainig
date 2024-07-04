@@ -344,3 +344,12 @@ fh_i_b.close()
 fh_i_c.close()
 ```
 ## Simulation Result
+- @0ns
+	- i_a = 0x7E19C518, i_b = 0x8F2B374A, i_c = 0
+	-> i_a[3:0] = 8, 		i_b[3:0] = A,		i_c = 0
+	->   g[3:0]	= 4'b1000,	  p[3:0] = 4'b0010
+	->		  G = 1,			   P = 0
+	->	   cout = 1
+	-> ... result : o_s[31:0] = 0x0D44_FC62, o_c = 1
+![Waveform] (./test_waveform1.png)
+![Waveform] (./test_waveform.png)
