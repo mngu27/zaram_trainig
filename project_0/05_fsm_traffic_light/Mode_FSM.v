@@ -9,7 +9,6 @@ module Mode_FSM
 
     reg         Current_State;
     reg         Next_State;
-    reg         P, R;
 
     localparam  S_IDLE          =   1'b0;
     localparam  S_PARADE        =   1'b1;
@@ -17,27 +16,23 @@ module Mode_FSM
     always @(posedge i_clk or negedge i_rstn) begin
         if(!i_rstn) begin
             Current_State   <= S_IDLE;
-            P               <= 0;
-            R               <= 0;
         end
         else begin
             Current_State   <= Next_State;
-            P               <= i_P;
-            R               <= i_R;
         end
     end
 
     always @(*) begin
-        if(P == 1'b0 && Current_State == S_IDLE) begin
+        if(i_P == 1'b0 && Current_State == S_IDLE) begin
             Next_State = S_IDLE;
         end
-        else if(P == 1'b1 && Current_State == S_IDLE) begin
+        else if(i_P == 1'b1 && Current_State == S_IDLE) begin
             Next_State = S_PARADE;
         end
-        else if(R == 1'b0 && Current_State == S_PARADE) begin
+        else if(i_R == 1'b0 && Current_State == S_PARADE) begin
             Next_State = S_PARADE;
         end
-        else if(R == 1'b1 && Current_State == S_PARADE) begin
+        else if(i_R == 1'b1 && Current_State == S_PARADE) begin
             Next_State = S_IDLE;
         end
     end

@@ -10,7 +10,6 @@ module  Light_FSM(
 
     reg [1:0]       Current_State;
     reg [1:0]       Next_State;
-    reg              TA, TB;
 
     localparam  STATE_0			=   2'b00;
     localparam  STATE_1         =   2'b01;
@@ -21,38 +20,34 @@ module  Light_FSM(
     localparam  RED             =   2'b01;
     localparam  YELLOW          =   2'b10;
     
-
+	
     always @(posedge i_clk or negedge i_rstn) begin
         if(!i_rstn) begin
             Current_State   <= STATE_0;
-            TA              <= 0;
-            TB              <= 0;
         end
         else begin
             Current_State   <= Next_State;
-            TA              <= i_TA;
-            TB              <= i_TB;
         end
     end
 
     always @(*) begin
         case(Current_State)
             STATE_0 : begin
-                if(TA == 1'b0)
+                if(i_TA == 1'b0)
                     Next_State = STATE_1;
-                else if(TA == 1'b1) 
+                else if(i_TA == 1'b1) 
                     Next_State = STATE_0;
             end
             STATE_1 : begin
                 Next_State = STATE_2;
             end
             STATE_2 : begin
-                if(i_M == 1'b1 || TB == 1'b1)       
+                if(i_M == 1'b1 || i_TB == 1'b1)       
                     Next_State <= STATE_2;
-                else if(i_M == 1'b0 && TB == 1'b0)  
+                else if(i_M == 1'b0 && i_TB == 1'b0)  
                     Next_State <= STATE_3;
-            end
-            STATE_3 : begin
+			end
+			STATE_3 : begin
                 Next_State = STATE_0;
             end
             default : begin

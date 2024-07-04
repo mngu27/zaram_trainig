@@ -50,7 +50,7 @@ task init;
         R 		= 0;
         TA		= 0;
         TB		= 0;
-		repeat (4) @(posedge i_clk);
+		repeat (3) @(negedge i_clk);
 		i_rstn		= 1;
     end
 endtask
@@ -99,6 +99,14 @@ task leave_parade;
 	end
 endtask
 
+wire [8*32-1:0] ColorState_LA, ColorState_LB;
+assign ColorState_LA = (LA == 2'b00) ? "GREEN" :
+					(LA == 2'b01) ? "RED"	:
+					"YELLOW";
+assign ColorState_LB = (LB == 2'b00) ? "GREEN" :
+					(LB == 2'b01) ? "RED"	:
+					"YELLOW";
+
 
 //---------------------------------------------------
 //Stimulus
@@ -112,22 +120,22 @@ initial begin
 	for (i=0; i<`SIMCYCLE; i++) begin
 	A_load_has_car;
 	d=$urandom_range(3'd1, 3'd4);
-	repeat(d) @(posedge i_clk);
+	repeat(d) @(negedge i_clk);
 	A_load_has_no_car;
 	d=$urandom_range(3'd1, 3'd4);
-	repeat(d) @(posedge i_clk);
+	repeat(1) @(negedge i_clk);
 	enter_parade;
 	d=$urandom_range(3'd1, 3'd4);
-	repeat(d) @(posedge i_clk);
+	repeat(d) @(negedge i_clk);
 	B_load_has_car;
 	d=$urandom_range(3'd1, 3'd4);
-	repeat(d) @(posedge i_clk);
+	repeat(d) @(negedge i_clk);
 	B_load_has_no_car;
 	d=$urandom_range(3'd1, 3'd4);
-	repeat(d) @(posedge i_clk);
+	repeat(d) @(negedge i_clk);
 	leave_parade;
 	d=$urandom_range(3'd1, 3'd4);
-	repeat(d) @(posedge i_clk);
+	repeat(d) @(negedge i_clk);
 
 
 	end
@@ -148,7 +156,4 @@ end
 			$dumpvars;
 		end
 	end
-
-
-
 endmodule
