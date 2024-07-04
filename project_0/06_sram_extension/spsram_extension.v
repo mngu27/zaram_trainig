@@ -23,10 +23,7 @@ module spsram_extension
 	assign oen[1] = i_oen && (!i_addr[5]) &&  (i_addr[4]);
 	assign oen[2] = i_oen &&  (i_addr[5]) && (!i_addr[4]);
 	assign oen[3] = i_oen &&  (i_addr[5]) &&  (i_addr[4]);
-
-
-
-
+	
 	spsram
 	#(
 		.BW_DATA			(32					),
@@ -147,4 +144,4 @@ module spsram_extension
 		.o_data				(o_data[63:32]		)
 	);
 
-	endmodule
+endmodule
