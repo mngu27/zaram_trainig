@@ -1,5 +1,6 @@
 # 8-bit Shift Register
 ## Operation Principle
+![capture](./capture0.PNG)
 	- Serial to parallel converter
 		- Load = 0
 		- input Sin -> ouput Q[7:0]
