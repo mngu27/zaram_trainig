@@ -5,9 +5,16 @@
 	- f has 3 bit. so f has 3'b000 to 3'b111.
 	- The MSB of f(f[2]) representive plus or minus of value.
 		- when f[2] is high. that means flip of input b 
-	- f[1:0] = 00 -> AND
-	- f[1:0] = 01 -> OR
-	- f[1:0] = 10 -> ADD or Substract
+	|F[2:0]|Function|
+	|:---:|:---:|
+	|000|A & B|
+	|001|A \| B|
+	|010|A + B|
+	|011|not used|
+	|100|A & ~B|
+	|101|A | ~B|
+	|110|A - B|
+	|111|SLT|
 	- only f[2] is high, f[1:0] = 11 -> SLT(Set Less Then)
 		- a >= b 	-> reseult = 'd0 
 		- a < b 	-> reseult = 'd1
