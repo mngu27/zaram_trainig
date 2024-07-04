@@ -94,6 +94,7 @@ end
 endmodule
 ```
 ### Testbench
+```verilog 
 //-------------------------------------
 // Define Global Variables
 // ------------------------------------
@@ -215,6 +216,7 @@ end
 
 endmodule
 ```
+
 ## Simulation
 	- @35ns
 		- i_d = 0x24 = 0b0010_0100 
