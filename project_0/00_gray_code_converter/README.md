@@ -143,5 +143,5 @@ endmodule
 	- idata = 8'h09(8'b0000_1001) 	-> gray = 0000_1101
 	- gray  = 0000_1101 	-> bin  = 0000_1001
 
-![Waveform0] (./test_waveform.png)
+![Waveform0](./test_waveform.png)
 
