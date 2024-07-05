@@ -78,7 +78,7 @@ module  Light_FSM(
     localparam  RED             =   2'b01;
     localparam  YELLOW          =   2'b10;
     
-
+	
     always @(posedge i_clk or negedge i_rstn) begin
         if(!i_rstn) begin
             Current_State   <= STATE_0;
@@ -91,10 +91,7 @@ module  Light_FSM(
     always @(*) begin
         case(Current_State)
             STATE_0 : begin
-                if(i_TA == 1'b0)
-                    Next_State = STATE_1;
-                else if(i_TA == 1'b1) 
-                    Next_State = STATE_0;
+				Next_State = (i_TA) ? STATE_0 : STATE_1;
             end
             STATE_1 : begin
                 Next_State = STATE_2;
@@ -104,8 +101,8 @@ module  Light_FSM(
                     Next_State <= STATE_2;
                 else if(i_M == 1'b0 && i_TB == 1'b0)  
                     Next_State <= STATE_3;
-            end
-            STATE_3 : begin
+			end
+			STATE_3 : begin
                 Next_State = STATE_0;
             end
             default : begin
@@ -166,18 +163,10 @@ module Mode_FSM
     end
 
     always @(*) begin
-        if(i_P == 1'b0 && Current_State == S_IDLE) begin
-            Next_State = S_IDLE;
-        end
-        else if(i_P == 1'b1 && Current_State == S_IDLE) begin
-            Next_State = S_PARADE;
-        end
-        else if(i_R == 1'b0 && Current_State == S_PARADE) begin
-            Next_State = S_PARADE;
-        end
-        else if(i_R == 1'b1 && Current_State == S_PARADE) begin
-            Next_State = S_IDLE;
-        end
+		case(Current_State)
+			S_IDLE 		: Next_State = (i_P) ? S_PARADE : S_IDLE;
+			S_PARADE 	: Next_State = (i_R) ? S_IDLE	: S_PARADE;
+		endcae	
     end
 
     always @(*) begin
@@ -188,7 +177,9 @@ module Mode_FSM
     end
 endmodule
 ```
+
 ### Testbench
+
 ```verilog
 //-------------------------------------
 // Define Global Variables

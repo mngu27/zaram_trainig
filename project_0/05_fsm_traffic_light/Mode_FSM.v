@@ -23,18 +23,10 @@ module Mode_FSM
     end
 
     always @(*) begin
-        if(i_P == 1'b0 && Current_State == S_IDLE) begin
-            Next_State = S_IDLE;
-        end
-        else if(i_P == 1'b1 && Current_State == S_IDLE) begin
-            Next_State = S_PARADE;
-        end
-        else if(i_R == 1'b0 && Current_State == S_PARADE) begin
-            Next_State = S_PARADE;
-        end
-        else if(i_R == 1'b1 && Current_State == S_PARADE) begin
-            Next_State = S_IDLE;
-        end
+		case(Current_State)
+			S_IDLE 		: Next_State = (i_P) ? S_PARADE : S_IDLE;
+			S_PARADE 	: Next_State = (i_R) ? S_IDLE	: S_PARADE;
+		endcase	
     end
 
     always @(*) begin

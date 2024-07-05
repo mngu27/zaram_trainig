@@ -33,10 +33,7 @@ module  Light_FSM(
     always @(*) begin
         case(Current_State)
             STATE_0 : begin
-                if(i_TA == 1'b0)
-                    Next_State = STATE_1;
-                else if(i_TA == 1'b1) 
-                    Next_State = STATE_0;
+				Next_State = (i_TA) ? STATE_0 : STATE_1;
             end
             STATE_1 : begin
                 Next_State = STATE_2;
