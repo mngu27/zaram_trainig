@@ -4,7 +4,8 @@
 - ALU can choose which opration do depending on value of f
 - f has 3 bit. so f has 3'b000 to 3'b111.
 - The MSB of f(f[2]) representive plus or minus of value.
-	- when f[2] is high. that means flip of input b 
+	- when f[2] is high. that means flip of input b
+
 |F[2:0]|Function|
 |:---:|:---:|
 |000|A & B|
