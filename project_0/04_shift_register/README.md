@@ -2,15 +2,16 @@
 ## Operation Principle
 ![capture](./capture0.PNG)
 
-	- Serial to parallel converter
-		- Load = 0
-		- input Sin -> ouput Q[7:0]
-		- Sin = 1 -> Q = 0b0001 , 1clk after Sin = 0 -> Q = 0b0010, 1clk after Sin = 1 -> Q = 0b0101
+ - Serial to parallel converter
+	- Load = 0
+	- input Sin -> ouput Q[7:0]
+	- Sin = 1 -> Q = 0b0001 , 1clk after Sin = 0 -> Q = 0b0010, 1clk after Sin = 1 -> Q = 0b0101
 
-	- Parallel to serial converter
-		- 1st clk : laod = 1, other clk : load = 0
-		- input D[7:0] -> output Sout
-		- D = 0x01 -> Sout = 0 0 0 0 0 0 0 1 
+ - Parallel to serial converter
+	- 1st clk : laod = 1, other clk : load = 0
+	- input D[7:0] -> output Sout
+	- D = 0x01 -> Sout = 0 0 0 0 0 0 0 1 
+
 ## Verilog Code
 ### DUT
 ```verilog 
