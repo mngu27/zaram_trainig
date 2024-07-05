@@ -14,6 +14,8 @@
 		- G 	= g3 + p3(g2 + p2(g1 + p1 * g0))
 		- P 	= p3 * p2 * p1 * p0
 		- c_out	= G + P * c_in
+		- c[i] = g[i] + p[i] * c[i-1] (c[-1] = i_c)
+		- sum	= p ^ c
 
 # Verilog
 ### DUT
