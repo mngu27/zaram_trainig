@@ -282,6 +282,13 @@ task leave_parade;
 	end
 endtask
 
+wire [8*32-1:0] ColorState_LA, ColorState_LB;
+assign ColorState_LA = (LA == 2'b00) ? "GREEN" :
+					(LA == 2'b01) ? "RED"	:
+					"YELLOW";
+assign ColorState_LB = (LB == 2'b00) ? "GREEN" :
+					(LB == 2'b01) ? "RED"	:
+					"YELLOW";
 
 //---------------------------------------------------
 //Stimulus
