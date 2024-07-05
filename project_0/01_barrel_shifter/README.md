@@ -1,8 +1,8 @@
 # 8-bit Barrel Shifter
 ## Operation Principle
-	- rotate amount depends on k.
-	- then right shift A
-	- Ex) A = 0100, k = 2 it means that 2bit right shift -> result : 0001
+ - rotate amount depends on k.
+ - then right shift A
+ - Ex) A = 0100, k = 2 it means that 2bit right shift -> result : 0001
 
 # Verilog Code
 ### DUT
