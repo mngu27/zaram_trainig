@@ -1,21 +1,21 @@
 # 32-bit Carry-Lookahead Adder
 ## Operation Principles
-	- carry-lookahead adder is faster than ripple-carry adder.
-	- ripple-carry adder's each digit requires previous digit operation output. so it has more delay
-	- carry-lookahead adder use two definition(generate, propagate). each digit operates without previous output. 
-	- use two definition
-		- generate : make carry_out independent of carry_in
-			- gi = ai & bi
-		- propagate : make carry_out when carry_in comes
-			- pi = ai ^ bi 
-	- use 4-bit block
-		- input		: a[3:0], b[3:0], cin
-		- output	: s[3:0], c_out
-		- G 	= g3 + p3(g2 + p2(g1 + p1 * g0))
-		- P 	= p3 * p2 * p1 * p0
-		- c_out	= G + P * c_in
-		- c[i] = g[i] + p[i] * c[i-1] (c[-1] = i_c)
-		- sum	= p ^ c
+ - carry-lookahead adder is faster than ripple-carry adder.
+ - ripple-carry adder's each digit requires previous digit operation output. so it has more delay
+ - carry-lookahead adder use two definition(generate, propagate). each digit operates without previous output. 
+ - use two definition
+	- generate : make carry_out independent of carry_in
+		- gi = ai & bi
+	- propagate : make carry_out when carry_in comes
+		- pi = ai ^ bi 
+ - use 4-bit block
+	- input		: a[3:0], b[3:0], cin
+	- output	: s[3:0], c_out
+	- G 	= g3 + p3(g2 + p2(g1 + p1 * g0))
+	- P 	= p3 * p2 * p1 * p0
+	- c_out	= G + P * c_in
+	- c[i] = g[i] + p[i] * c[i-1] (c[-1] = i_c)
+	- sum	= p ^ c
 
 # Verilog
 ### DUT
