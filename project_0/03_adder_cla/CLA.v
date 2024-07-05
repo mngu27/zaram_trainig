@@ -90,24 +90,6 @@ module CLA_4bit_block(
 	output			o_c,
 	output	[3:0]	o_s
 );
-	pg
-	u_pg(
-		.i_a				(i_a				),
-		.i_b				(i_b				),
-		.i_c				(i_c				),
-		.o_c				(o_c				),
-		.o_s				(o_s				)
-	);
-
-endmodule
-
-module pg(
-	input	[3:0]	i_a,
-	input	[3:0]	i_b,
-	input			i_c,
-	output			o_c,
-	output	[3:0]	o_s
-);
 
 	wire	[3:0]	p;
 	wire	[3:0]	g;

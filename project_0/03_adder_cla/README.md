@@ -102,36 +102,9 @@ module CLA(
 	);
 
 endmodule
-
-
-
-module CLA_4bit_block(
-	input	[3:0]	i_a,
-	input	[3:0]	i_b,
-	input			i_c,
-	output			o_c,
-	output	[3:0]	o_s
-);
-	pg
-	u_pg(
-		.i_a				(i_a				),
-		.i_b				(i_b				),
-		.i_c				(i_c				),
-		.o_c				(o_c				)
-	);
-
-	adder
-	u_adder(
-		.i_a				(i_a				),
-		.i_b				(i_b				),
-		.i_c				(i_c				),
-		.o_s				(o_s				)
-	);
-endmodule
 ```
-
-```verilog 
-module pg(
+```verilog
+module CLA_4bit_block(
 	input	[3:0]	i_a,
 	input	[3:0]	i_b,
 	input			i_c,
@@ -167,7 +140,6 @@ endmodule
 ```
 ### Testbench
 ```verilog 
-
 //-------------------------------------
 // Define Global Variables
 // ------------------------------------
