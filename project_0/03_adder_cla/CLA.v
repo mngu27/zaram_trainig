@@ -95,31 +95,25 @@ module CLA_4bit_block(
 		.i_a				(i_a				),
 		.i_b				(i_b				),
 		.i_c				(i_c				),
-		.o_c				(o_c				)
-	);
-
-	adder
-	u_adder(
-		.i_a				(i_a				),
-		.i_b				(i_b				),
-		.i_c				(i_c				),
+		.o_c				(o_c				),
 		.o_s				(o_s				)
 	);
+
 endmodule
 
 module pg(
 	input	[3:0]	i_a,
 	input	[3:0]	i_b,
 	input			i_c,
-	output			o_c
+	output			o_c,
+	output	[3:0]	o_s
 );
 
 	wire	[3:0]	p;
 	wire	[3:0]	g;
 	wire 			P;
 	wire			G;
-
-
+	wire	[2:0]	c;
 
 genvar i;
 generate 
@@ -129,22 +123,14 @@ generate
 	end 
 endgenerate
 
+assign c[0] = g[0] || (p[0] && i_c);
+assign c[1] = g[1] || (p[1] && c[0]);
+assign c[2] = g[2] || (p[2] && c[1]);
+
+assign o_s = p ^ { c, i_c};
+
 assign P = &p;
 assign G = g[3] | (p[3] & (g[2] | p[2] & (g[1] | (p[1] & g[0]))));
-
 assign o_c = G | (P & i_c);
-
-endmodule
-
-
-module adder(
-	input	[3:0]	i_a,
-	input	[3:0]	i_b,
-	input			i_c,
-	output	[3:0]	o_s
-);
-	wire			w_c;
-
-assign {w_c, o_s} = i_a + i_b + i_c;
 
 endmodule

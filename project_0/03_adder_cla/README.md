@@ -2,7 +2,7 @@
 ## Operation Principles
 	- carry-lookahead adder is faster than ripple-carry adder.
 	- ripple-carry adder's each digit requires previous digit operation output. so it has more delay
-	- carry-lookahead adder use two definition(generate, propagate). each digit make operation without previous output. 
+	- carry-lookahead adder use two definition(generate, propagate). each digit operates without previous output. 
 	- use two definition
 		- generate : make carry_out independent of carry_in
 			- gi = ai & bi
@@ -128,18 +128,22 @@ module CLA_4bit_block(
 		.o_s				(o_s				)
 	);
 endmodule
+```
 
+```verilog 
 module pg(
 	input	[3:0]	i_a,
 	input	[3:0]	i_b,
 	input			i_c,
-	output			o_c
+	output			o_c,
+	output	[3:0]	o_s
 );
 
 	wire	[3:0]	p;
 	wire	[3:0]	g;
 	wire 			P;
 	wire			G;
+	wire	[2:0]	c;
 
 genvar i;
 generate 
@@ -149,23 +153,15 @@ generate
 	end 
 endgenerate
 
+assign c[0] = g[0] || (p[0] && i_c);
+assign c[1] = g[1] || (p[1] && c[0]);
+assign c[2] = g[2] || (p[2] && c[1]);
+
+assign o_s = p ^ { c, i_c};
+
 assign P = &p;
 assign G = g[3] | (p[3] & (g[2] | p[2] & (g[1] | (p[1] & g[0]))));
-
 assign o_c = G | (P & i_c);
-
-endmodule
-
-
-module adder(
-	input	[3:0]	i_a,
-	input	[3:0]	i_b,
-	input			i_c,
-	output	[3:0]	o_s
-);
-	wire			w_c;
-
-assign {w_c, o_s} = i_a + i_b + i_c;
 
 endmodule
 ```
