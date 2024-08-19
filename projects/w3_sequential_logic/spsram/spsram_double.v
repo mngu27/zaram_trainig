@@ -15,10 +15,10 @@ module spsram_double(
 	wire					i_oen0;
 	wire					i_oen1;
 
-	assign i_cen0 = ~i_addr[4];
-	assign i_oen0 = ~i_addr[4];
-	assign i_cen1 =  i_addr[4];
-	assign i_oen1 =  i_addr[4];
+	assign i_cen0 = i_cen && (~i_addr[4]);
+	assign i_oen0 = i_oen && (~i_addr[4]);
+	assign i_cen1 = i_cen && (i_addr[4]);
+	assign i_oen1 = i_oen &&  (i_addr[4]);
 
 
 	spsram
@@ -45,7 +45,7 @@ module spsram_double(
 	u_spsram1(
 		.i_clk				(i_clk				),
 		.i_data				(i_data				),
-		.i_addr				(i_addr				),
+		.i_addr				(i_addr[3:0]		),
 		.i_wen				(i_wen				),
 		.i_cen				(i_cen1				),
 		.i_oen				(i_oen1				),
