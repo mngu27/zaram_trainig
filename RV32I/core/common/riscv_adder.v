@@ -1,0 +1,11 @@
+`include	"riscv_configs.v"
+
+module riscv_adder(
+	input	[`XLEN-1:0]	i_adder_a,
+	input	[`XLEN-1:0]	i_adder_b,
+	output	[`XLEN-1:0]	o_adder_sum
+);
+
+assign o_adder_sum = i_adder_a + i_adder_b;
+
+endmodule
