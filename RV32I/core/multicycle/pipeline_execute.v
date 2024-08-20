@@ -10,6 +10,9 @@ module pipeline_execute(
     input   BranchD,
     input   ALUControlD,
     input   ALUSrcD,
+
+	input	Rd1D,
+	input	Rd2D,
     
     input   PCD,
     input   Rs1D,
@@ -25,6 +28,9 @@ module pipeline_execute(
     output reg   BranchE,
     output reg   ALUControlE,
     output reg   ALUSrcE,
+
+	output reg	Rd1E,
+	output reg	Rd2E,
     
     output reg   PCE,
     output reg   Rs1E,
@@ -44,6 +50,8 @@ module pipeline_execute(
             BranchE     <= 0;
             ALUControlE <= 0;
             ALUSrcE     <= 0;
+			Rd1E        <= 0;
+            Rd2E        <= 0;
             PCE         <= 0;
             Rs1E        <= 0;
             Rs2E        <= 0;
@@ -59,6 +67,8 @@ module pipeline_execute(
             BranchE     <= BranchD;
             ALUControlE <= ALUControlD;
             ALUSrcE     <= ALUSrcD;
+			Rd1E        <= Rd1D;
+            Rd2E        <= Rd2D;
             PCE         <= PCD;
             Rs1E        <= Rs1D;
             Rs2E        <= Rs2D;
