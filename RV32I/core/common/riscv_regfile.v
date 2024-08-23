@@ -1,4 +1,7 @@
-`include		"riscv_configs.v"
+`ifndef		NOINC
+`include	"riscv_configs.v"
+`endif
+
 
 module	riscv_regfile(
 	input						i_clk,

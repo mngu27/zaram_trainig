@@ -1,4 +1,6 @@
+`ifndef		NOINC
 `include	"riscv_configs.v"
+`endif
 
 module riscv_adder(
 	input	[`XLEN-1:0]	i_adder_a,

@@ -1,4 +1,7 @@
+`ifndef		NOINC
 `include	"riscv_configs.v"
+`endif
+
 
 module riscv_dmem(
 	input							i_clk,
@@ -11,8 +14,16 @@ module riscv_dmem(
 	reg		[`XLEN-1:0]	dmem_arr[0:2**(`DMEM_ADDR_BIT-2)-1];
 
 `ifdef	DMEM_INIT
-	initial		$readmemh(`DMEM_INIT_FILE, dmem_arr);
+	reg	[8*128-1:0] FILE_DATA_MIF;
+	initial	begin
+		$value$plusargs("data_mif=%s", FILE_DATA_MIF);
+		$readmemh(FILE_DATA_MIF, dmem_arr);
+	end
 `endif
+
+//`ifdef	DMEM_INIT
+//	initial		$readmemh(`DMEM_INIT_FILE, dmem_arr);
+//`endif
 
 	//Memory Read(output is not switching during write)
 	assign		o_dmem_data = (i_dmem_wr_en) ? o_dmem_data : dmem_arr[i_dmem_addr];

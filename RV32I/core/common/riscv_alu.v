@@ -1,4 +1,6 @@
-`include		"riscv_configs.v"
+`ifndef		NOINC
+`include	"riscv_configs.v"
+`endif
 
 module	riscv_alu(
 	input		[`XLEN-1:0] i_alu_a,
