@@ -14,7 +14,7 @@ module riscv_fetch
     input                   i_rstn,
     input                   i_hazard_stallF,
     input   [      1:0]     i_PCSrcE,
-    input   [`XLEN-1:0]     i_PC_TargetE,
+    input   [`XLEN-1:0]     i_PCTargetE,
     input   [`XLEN-1:0]     i_alu_resultE,
 
     output  [`XLEN-1:0]     o_PCPlus4F,
@@ -25,7 +25,7 @@ module riscv_fetch
     wire    [    `XLEN-1:0]     PCW;
     wire    [(3*`XLEN)-1:0]     PC_concat_data;
 
-    assign  PC_concat_data = {i_alu_resultE, i_PC_TargetE, o_PCPlus4F};
+    assign  PC_concat_data = {i_alu_resultE, i_PCTargetE, o_PCPlus4F};
 
     riscv_mux
 	#(

@@ -13,12 +13,13 @@ module	riscv_ctrl(
     output reg          o_ctrl_jal,
     output reg          o_ctrl_jalr,
     output reg          o_ctrl_branch,
-    output reg  [2:0]   o_ctrl_alu_ctrl,
+    output reg  [3:0]   o_ctrl_alu_ctrl,
     output reg          o_ctrl_alu_src,
     output reg	[2:0]	o_ctrl_src_imm,
 	output reg	[3:0]	o_ctrl_mem_byte_sel
 );
 
+/// Register Write Enable ///
 always @(*) begin
 	case(i_ctrl_opcode)
 		`OPCODE_B_BRANCH	: o_ctrl_reg_wr_en	= 1'b0;
@@ -27,16 +28,18 @@ always @(*) begin
 	endcase 
 end 
 
+/// Result Select ///
 always @(*) begin
 	case(i_ctrl_opcode) 
         `OPCODE_I_LOAD		: o_ctrl_result_src = `SRC_RD_DME;
         `OPCODE_J_JAL		: o_ctrl_result_src = `SRC_PC_PC_4;
         `OPCODE_I_JALR		: o_ctrl_result_src = `SRC_PC_PC_4;
-	`OPCODE_U_LUI		: o_ctrl_result_src		= `SRC_RD_IMM;
+		`OPCODE_U_LUI		: o_ctrl_result_src	= `SRC_RD_IMM;
         default     		: o_ctrl_result_src = `SRC_RD_ALU;
 	endcase
 end 
 
+/// Memory Enable ///
 always @(*) begin
 	case(i_ctrl_opcode)
 		`OPCODE_S_STORE		: o_ctrl_mem_wr_en	= 1'b1;
@@ -44,7 +47,7 @@ always @(*) begin
 	endcase 
 end	
 
-//// New ////
+/// Branch ////
 always @(*) begin
 	case(i_ctrl_opcode)
 		`OPCODE_B_BRANCH	: o_ctrl_branch   	= 1'b1;
@@ -52,6 +55,7 @@ always @(*) begin
 	endcase 
 end 
 
+//// JAL ////
 always @(*) begin
 	case(i_ctrl_opcode)
 		`OPCODE_J_JAL	    : o_ctrl_jal    	= 1'b1;
@@ -59,6 +63,7 @@ always @(*) begin
 	endcase 
 end 
 
+/// JALR ///
 always @(*) begin
 	case(i_ctrl_opcode)
 		`OPCODE_I_JALR	    : o_ctrl_jalr    	= 1'b1;
@@ -66,8 +71,7 @@ always @(*) begin
 	endcase 
 end
 
-//////
-
+/// ALU Select //// 
 always @(*) begin
 	case(i_ctrl_opcode)
 		`OPCODE_R_OP	,
@@ -98,6 +102,7 @@ always @(*) begin
 	endcase 
 end 
 
+/// Immediate Select //// 
 	always @(*) begin
 		case (i_ctrl_opcode)
 			`OPCODE_R_OP		: o_ctrl_src_imm	= `SRC_IMM_R;
@@ -113,13 +118,16 @@ end
 		endcase
 	end
 
+/// ALU Select ////
 always @(*) begin
 	case(i_ctrl_opcode)
-        `OPCODE_I_JALR      : o_ctrl_alu_src    = 1'b1;
-        default             : o_ctrl_alu_src    = 1'b0;
+        `OPCODE_R_OP	    : o_ctrl_alu_src    = 1'b0;
+		`OPCODE_B_BRANCH	: o_ctrl_alu_src	= 1'b0;
+        default             : o_ctrl_alu_src    = 1'b1;
     endcase
 end
 
+/// byte Select ///
 always @(*) begin
 	case(i_ctrl_opcode)
 		`OPCODE_I_LOAD ,
@@ -136,10 +144,6 @@ always @(*) begin
 		default						: 	o_ctrl_mem_byte_sel = 4'b1111;
 	endcase
 end 
-
-
-
-
 
 `ifdef	DEBUG
 	reg	[8*32-1:0]	DEBUG_INSTR;
@@ -201,7 +205,5 @@ end
             `OPCODE_U_AUIPC				:	DEBUG_INSTR = "auipc:";
 		endcase 
 	end 
-
 `endif 
-
 endmodule

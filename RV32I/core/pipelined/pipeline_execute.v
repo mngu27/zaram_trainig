@@ -14,7 +14,7 @@ module pipeline_execute(
     input                       i_ctrl_jalD,
     input                       i_ctrl_jalrD,
     input                       i_ctrl_branchD,
-    input       [       2:0]    i_ctrl_alu_ctrlD,
+    input       [       3:0]    i_ctrl_alu_ctrlD,
     input                       i_ctrl_alu_srcD,
     input		[		3:0]    i_ctrl_mem_byte_selD,
 	input 	 	[	    2:0] 	i_ctrl_funct3D,
@@ -36,7 +36,7 @@ module pipeline_execute(
     output reg                  o_ctrl_jalE,
     output reg                  o_ctrl_jalrE,
     output reg                  o_ctrl_branchE,
-    output reg  [       2:0]    o_ctrl_alu_ctrlE,
+    output reg  [       3:0]    o_ctrl_alu_ctrlE,
     output reg                  o_ctrl_alu_srcE,
     output reg	[		3:0]    o_ctrl_mem_byte_selE,
 
@@ -51,8 +51,8 @@ module pipeline_execute(
     output reg  [ `XLEN-1:0]    o_PCPlus4E
 );
 
-    always @(posedge i_clk or negedge i_rstn or posedge i_clear) begin
-        if((!i_rstn) || i_clear) begin
+    always @(posedge i_clk or negedge i_rstn) begin
+        if((~i_rstn) || i_clear) begin
             o_ctrl_reg_wr_enE       <= 0;
             o_ctrl_result_srcE      <= 0;
             o_ctrl_mem_wr_enE       <= 0;

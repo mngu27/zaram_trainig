@@ -1,8 +1,6 @@
 `ifndef		NOINC
 `include	"riscv_configs.v"
 `endif
-
-
 module	riscv_regfile(
 	input						i_clk,
 	input						i_regfile_rd_wen,
@@ -24,7 +22,7 @@ module	riscv_regfile(
 	//HW x0
 	initial		registers[0] = `XLEN'b0;
 
-	always @(posedge i_clk) begin
+	always @(negedge i_clk) begin
 		//Write Enable && (Write Addr is not zero)
 		if(i_regfile_rd_wen && (i_regfile_rd_addr != 0)) begin
 			registers[i_regfile_rd_addr] <= i_regfile_rd_data;

@@ -25,9 +25,7 @@ module	riscv_pipelined_cpu
     output  [`XLEN-1:0] 	    o_mem_writedataM
 );
 
-
 	wire    [`XLEN-1:0]     PCPlus4F;
-
 
 	riscv_fetch
 	#(
@@ -38,7 +36,7 @@ module	riscv_pipelined_cpu
 		.i_rstn				(i_rstn				),
 		.i_hazard_stallF	(hazard_stallF	),
 		.i_PCSrcE			(PCSrcE			),
-		.i_PC_TargetE		(PC_TargetE		),
+		.i_PCTargetE		(PCTargetE		),
 		.i_alu_resultE		(alu_resultE		),
 		.o_PCPlus4F			(PCPlus4F			),
 //		.o_instrF			(instrF			),
@@ -55,12 +53,12 @@ module	riscv_pipelined_cpu
 	wire                      ctrl_jalD;
 	wire                      ctrl_jalrD;
 	wire                      ctrl_branchD;
-	wire      [     2:0]      ctrl_alu_ctrlD;
+	wire      [     3:0]      ctrl_alu_ctrlD;
 	wire                      ctrl_alu_srcD;
 	wire	  [     3:0]	  ctrl_mem_byte_selD;
 	wire      [     4:0]      regfile_rs1_addrD;        
 	wire      [     4:0]      regfile_rs2_addrD;
-	wire      [`XLEN-1:0]     regfile_rs1_dataD;
+	wire      [`XLEN-3:0]     regfile_rs1_dataD;
 	wire      [`XLEN-1:0]     regfile_rs2_dataD;
 	wire      [`XLEN-1:0]     ExtImmD;
 	wire	  [     4:0]	  regfile_rd_addrD;
@@ -79,8 +77,9 @@ module	riscv_pipelined_cpu
 		.o_ctrl_funct3D		(ctrl_funct3D		),
 		.o_PCD				(PCD				),
 		.o_PCPlus4D			(PCPlus4D			),
-		.i_ctrl_reg_wr_enW	(ctrl_reg_wr_enW		),
+		.i_ctrl_reg_wr_enW	(ctrl_reg_wr_enW	),
 		.i_regfile_rd_addrW	(regfile_rd_addrW	),
+		.i_regfile_rd_dataW (regfile_rd_dataW	),
 		.o_ctrl_reg_wr_enD	(ctrl_reg_wr_enD	),
 		.o_ctrl_result_srcD	(ctrl_result_srcD	),
 		.o_ctrl_mem_wr_enD	(ctrl_mem_wr_enD	),
@@ -99,7 +98,7 @@ module	riscv_pipelined_cpu
 	);
 
 	wire 		                ctrl_reg_wr_enE;
-	wire 		[       1:0]    ctrl_result_src_E;
+	wire 		[       1:0]    ctrl_result_srcE;
 	wire 		                ctrl_mem_wr_enE;
     wire        [       3:0]    ctrl_mem_byte_selE;
 	wire		[       4:0]    regfile_rs1_addrE;
@@ -146,7 +145,7 @@ module	riscv_pipelined_cpu
 		.o_regfile_rs2_addrE(regfile_rs2_addrE),
 		.o_regfile_rd_addrE	(regfile_rd_addrE	),
 		.o_alu_resultE		(alu_resultE		),
-		.o_mem_writedataE	(o_mem_writedataE	),
+		.o_mem_writedataE	(mem_writedataE	),
 		.o_PCTargetE		(PCTargetE		),
 		.o_PCPlus4E			(PCPlus4E			),
 		.o_PCSrcE			(PCSrcE			)
@@ -157,6 +156,7 @@ module	riscv_pipelined_cpu
 	wire		[ `XLEN-1:0]	alu_resultM;
 	wire	 	[       4:0]    regfile_rd_addrM;
 	wire		[ `XLEN-1:0]	PCPlus4M;
+	wire		[ `XLEN-1:0]	PCTargetM;
 
 	riscv_memory
 	u_riscv_memory(
@@ -170,6 +170,7 @@ module	riscv_pipelined_cpu
 		.i_mem_writedataE	(mem_writedataE	),
 		.i_regfile_rd_addrE	(regfile_rd_addrE	),
 		.i_PCPlus4E			(PCPlus4E			),
+		.i_PCTargetE		(PCTargetE			),
 		.o_ctrl_reg_wr_enM	(ctrl_reg_wr_enM	),
 		.o_ctrl_result_srcM	(ctrl_result_srcM	),
         .o_ctrl_mem_wr_enM  (o_ctrl_mem_wr_enM),
@@ -178,7 +179,8 @@ module	riscv_pipelined_cpu
 		//.o_mem_readdataM	(mem_readdataM	),
         .o_mem_writedataM   (o_mem_writedataM),
 		.o_regfile_rd_addrM	(regfile_rd_addrM	),
-		.o_PCPlus4M			(PCPlus4M			)
+		.o_PCPlus4M			(PCPlus4M			),
+		.o_PCTargetM		(PCTargetM			)
 	);
 	
 	wire                      ctrl_reg_wr_enW;
@@ -194,6 +196,7 @@ module	riscv_pipelined_cpu
 		.i_alu_resultM		(o_alu_resultM		),
 		.i_mem_readdataM	(i_mem_readdataM	),
 		.i_PCPlus4M			(PCPlus4M			),
+		.i_PCTargetM		(PCTargetM			),
 		.i_regfile_rd_addrM	(regfile_rd_addrM	),
 		.o_ctrl_reg_wr_enW	(ctrl_reg_wr_enW	),
 		.o_regfile_rd_addrW	(regfile_rd_addrW	),
@@ -202,10 +205,10 @@ module	riscv_pipelined_cpu
 	
 	wire	 [       1:0]        hazard_forwardAE;
 	wire	 [       1:0]        hazard_forwardBE;
-	wire	                     hazrd_stallF;
-	wire	                     hazrd_stallD;
-	wire	                     hazrd_flushE;
-	wire	                     hazrd_flushD;
+	wire	                     hazard_stallF;
+	wire	                     hazard_stallD;
+	wire	                     hazard_flushE;
+	wire	                     hazard_flushD;
 
 	hazard_unit
 	u_hazard_unit(
@@ -218,7 +221,7 @@ module	riscv_pipelined_cpu
 		.i_regfile_rs1_addrD(regfile_rs1_addrD),
 		.i_regfile_rs2_addrD(regfile_rs2_addrD),
 		.i_regfile_rd_addrE	(regfile_rd_addrE	),
-		.i_ctrl_result_srcE0(ctrl_result_srcE0),
+		.i_ctrl_result_srcE	(ctrl_result_srcE),
 		.i_PCSrcE			(PCSrcE			),
 		.o_hazard_forwardAE	(hazard_forwardAE	),
 		.o_hazard_forwardBE	(hazard_forwardBE	),

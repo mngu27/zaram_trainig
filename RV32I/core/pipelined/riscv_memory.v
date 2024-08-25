@@ -17,8 +17,9 @@ module riscv_memory(
     input		[ `XLEN-1:0]	i_mem_writedataE,
     input       [       4:0]    i_regfile_rd_addrE,
     input		[ `XLEN-1:0]	i_PCPlus4E,	
-
-    output 		                o_ctrl_reg_wr_enM,
+	input		[ `XLEN-1:0]	i_PCTargetE,
+    
+	output 		                o_ctrl_reg_wr_enM,
 	output 		[       1:0]    o_ctrl_result_srcM,
 	output		[		3:0]    o_ctrl_mem_byte_selM,
 	output						o_ctrl_mem_wr_enM,
@@ -29,6 +30,7 @@ module riscv_memory(
 
     output	 	[       4:0]    o_regfile_rd_addrM,
     output		[ `XLEN-1:0]	o_PCPlus4M,
+	output		[ `XLEN-1:0]	o_PCTargetM,
 	output		[ `XLEN-1:0] 	o_mem_writedataM
 );
 
@@ -44,7 +46,8 @@ module riscv_memory(
     	.i_alu_resultE		( i_alu_resultE		),
     	.i_mem_writedataE	( i_mem_writedataE	),
     	.i_regfile_rd_addrE	( i_regfile_rd_addrE),
-		.i_PCPlus4E			 (i_PCPlus4E		),	
+		.i_PCPlus4E			(i_PCPlus4E		),	
+		.i_PCTargetE		(i_PCTargetE		),
 
     	.o_ctrl_reg_wr_enM	( o_ctrl_reg_wr_enM	),
     	.o_ctrl_result_srcM	( o_ctrl_result_srcM),
@@ -54,7 +57,8 @@ module riscv_memory(
     	.o_alu_resultM		( o_alu_resultM		),
     	.o_mem_writedataM	( o_mem_writedataM	),
     	.o_regfile_rd_addrM	( o_regfile_rd_addrM),
-    	.o_PCPlus4M			( o_PCPlus4M		)	
+    	.o_PCPlus4M			( o_PCPlus4M		),
+		.o_PCTargetM		( o_PCTargetM		)
 );
 
 /*

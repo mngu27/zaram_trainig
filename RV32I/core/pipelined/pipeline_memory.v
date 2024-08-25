@@ -16,8 +16,9 @@ module pipeline_memory(
     input		[ `XLEN-1:0]	i_mem_writedataE,
     input       [       4:0]    i_regfile_rd_addrE,
     input		[ `XLEN-1:0]	i_PCPlus4E,	
-
-    output reg                  o_ctrl_reg_wr_enM,
+	input		[ `XLEN-1:0]	i_PCTargetE,
+    
+	output reg                  o_ctrl_reg_wr_enM,
     output reg  [       1:0]    o_ctrl_result_srcM,
     output reg                  o_ctrl_mem_wr_enM,
     output reg	[		3:0]    o_ctrl_mem_byte_selM,
@@ -25,7 +26,8 @@ module pipeline_memory(
     output reg	[ `XLEN-1:0]	o_alu_resultM,
     output reg	[ `XLEN-1:0]	o_mem_writedataM,
     output reg  [       4:0]    o_regfile_rd_addrM,
-    output reg	[ `XLEN-1:0]	o_PCPlus4M	
+    output reg	[ `XLEN-1:0]	o_PCPlus4M,
+	output reg	[ `XLEN-1:0]	o_PCTargetM
 );
 
     always @(posedge i_clk or negedge i_rstn) begin
@@ -38,6 +40,7 @@ module pipeline_memory(
             o_mem_writedataM        <= 0;
             o_regfile_rd_addrM      <= 0;
             o_PCPlus4M              <= 0;
+			o_PCTargetM				<= 0;
         end 
         else begin
             o_ctrl_reg_wr_enM       <= i_ctrl_reg_wr_enE;
@@ -47,7 +50,8 @@ module pipeline_memory(
             o_alu_resultM           <= i_alu_resultE;
             o_mem_writedataM        <= i_mem_writedataE;
             o_regfile_rd_addrM      <= i_regfile_rd_addrE;
-            o_PCPlus4M              <= i_PCPlus4E;      
+            o_PCPlus4M              <= i_PCPlus4E;
+			o_PCTargetM				<= i_PCTargetE;
             end
     end
 

@@ -18,7 +18,7 @@ module pipeline_decode(
 );
 
     always @(posedge i_clk or negedge i_rstn) begin
-        if((!i_rstn) || i_clear) begin
+        if((~i_rstn) || i_clear) begin
             o_instrD      <= 0;
             o_PCD         <= 0;
             o_PCPlus4D    <= 0;

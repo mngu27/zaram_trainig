@@ -16,11 +16,10 @@ module riscv_execute(
     input                       i_ctrl_jalD,
     input                       i_ctrl_jalrD,
     input                       i_ctrl_branchD,
-    input       [       2:0]    i_ctrl_alu_ctrlD,
+    input       [       3:0]    i_ctrl_alu_ctrlD,
     input                       i_ctrl_alu_srcD,
 	input		[		3:0]    i_ctrl_mem_byte_selD,
 	input 	 	[	    2:0] 	i_ctrl_funct3D,
-
 
     input       [ `XLEN-1:0]    i_regfile_rs1_dataD,
     input       [ `XLEN-1:0]    i_regfile_rs2_dataD,
@@ -60,7 +59,7 @@ module riscv_execute(
  	wire                  ctrl_jalE;
     wire                  ctrl_jalrE;
     wire                  ctrl_branchE;
-    wire  [       2:0]    ctrl_alu_ctrlE;
+    wire  [       3:0]    ctrl_alu_ctrlE;
     wire                  ctrl_alu_srcE;
 	wire  [ `XLEN-1:0]    regfile_rs1_dataE;
     wire  [ `XLEN-1:0]    regfile_rs2_dataE;
@@ -94,7 +93,7 @@ u_pipeline_execute(
     .i_ExtImmD				( i_ExtImmD			),
     .i_PCPlus4D				( i_PCPlus4D		),
 
-	.o_ctrl_funct3E			( o_ctrl_funct3E		),
+	.o_ctrl_funct3E			( ctrl_funct3E	),
     .o_ctrl_reg_wr_enE		( o_ctrl_reg_wr_enE	),
     .o_ctrl_result_srcE		( o_ctrl_result_srcE),
     .o_ctrl_mem_wr_enE		( o_ctrl_mem_wr_enE	),
@@ -115,7 +114,7 @@ u_pipeline_execute(
     .o_PCPlus4E				( o_PCPlus4E		 )
 );
 
-	wire	[			2:0]	ctrl_funct3E;
+	wire	[		   2:0]	ctrl_funct3E;
     wire    [    `XLEN-1:0]	SrcAE;
     wire    [    `XLEN-1:0]	SrcBE;
 
@@ -191,12 +190,13 @@ u_pipeline_execute(
 			default				   : take_branch = 1'b0;
 		endcase
 	end
+
 	//// jal, jalr, branch -> PC jump ////
 	wire 	PC_branch;
-    assign 	PC_branch = zeroE && ctrl_branchE;
+    assign 	PC_branch = take_branch && ctrl_branchE;
 
     assign  o_PCSrcE = ctrl_jalrE    ?   2'b10 
-                  : ctrl_jalE || (PC_branch&&take_branch) ? 2'b01 
+                  : (ctrl_jalE || PC_branch) ? 2'b01 
                   : 2'b00;
 
 

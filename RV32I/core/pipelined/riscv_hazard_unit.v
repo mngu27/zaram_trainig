@@ -12,10 +12,10 @@ module hazard_unit(
     input       [       4:0]    i_regfile_rs1_addrD,
     input       [       4:0]    i_regfile_rs2_addrD,
     input       [       4:0]    i_regfile_rd_addrE,
-    input                       i_ctrl_result_srcE0,
+    input       [       1:0]        i_ctrl_result_srcE,
 
     // Control hazard flush
-    input                       i_PCSrcE,
+    input        [      1:0]    i_PCSrcE,
     
     // Data Forwarding
     output  reg [       1:0]        o_hazard_forwardAE,
@@ -49,12 +49,12 @@ always @(*) begin
 end
 
 
-assign lwStall = (((i_regfile_rs1_addrD == i_regfile_rd_addrE) || (i_regfile_rs2_addrD == i_regfile_rd_addrE)) && i_ctrl_result_srcE0);
+assign lwStall = (((i_regfile_rs1_addrD == i_regfile_rd_addrE) || (i_regfile_rs2_addrD == i_regfile_rd_addrE)) && (i_ctrl_result_srcE == 2'b01));
 
 always @(*) begin
     o_hazard_stallF  = lwStall;
     o_hazard_stallD  = lwStall;
-    o_hazard_flushE  = lwStall || i_PCSrcE;
-    o_hazard_flushD  = i_PCSrcE;   
+    o_hazard_flushE  = lwStall || i_PCSrcE[1] || i_PCSrcE[0];
+    o_hazard_flushD  = i_PCSrcE[1] || i_PCSrcE[0];   
 end
 endmodule
