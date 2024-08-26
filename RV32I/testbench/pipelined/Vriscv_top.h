@@ -28,8 +28,9 @@ VL_MODULE(Vriscv_top) {
     VL_IN8(i_rstn,0,0);
     VL_OUT8(o_ctrl_mem_wr_enM,0,0);
     VL_OUT8(o_ctrl_mem_byte_selM,3,0);
-    VL_OUT(o_instrF,31,0);
+    VL_OUT8(o_ctrl_funct3M,2,0);
     VL_OUT(o_mem_readdataM,31,0);
+    VL_OUT(o_instrF,31,0);
     VL_OUT(o_PCF,31,0);
     VL_OUT(o_alu_resultM,31,0);
     VL_OUT(o_mem_writedataM,31,0);
@@ -38,6 +39,8 @@ VL_MODULE(Vriscv_top) {
     // Internals; generally not touched by application code
     // Anonymous structures to workaround compiler member-count bugs
     struct {
+        CData/*0:0*/ riscv_top__DOT__ctrl_mem_wr_enM;
+        CData/*3:0*/ riscv_top__DOT__ctrl_mem_byte_selM;
         CData/*1:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__ctrl_mux_selD;
         CData/*3:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__ctrl_alu_ctrlD;
         CData/*0:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__ctrl_alu_srcD;
@@ -46,6 +49,7 @@ VL_MODULE(Vriscv_top) {
         CData/*1:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__ctrl_mux_selE;
         CData/*0:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__ctrl_mem_wr_enE;
         CData/*3:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__ctrl_mem_byte_selE;
+        CData/*2:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__ctrl_funct3E;
         CData/*4:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__regfile_rs1_addrE;
         CData/*4:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__regfile_rs2_addrE;
         CData/*4:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__regfile_rd_addrE;
@@ -65,11 +69,13 @@ VL_MODULE(Vriscv_top) {
         CData/*0:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_execute__DOT__ctrl_branchE;
         CData/*3:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_execute__DOT__ctrl_alu_ctrlE;
         CData/*0:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_execute__DOT__ctrl_alu_srcE;
-        CData/*2:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_execute__DOT__ctrl_funct3E;
         CData/*0:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_execute__DOT__take_branch;
         CData/*1:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_memory__DOT__ctrl_mux_selM;
         CData/*0:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_writeback__DOT__ctrl_result_srcW;
         CData/*0:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_hazard_unit__DOT__lwStall;
+        IData/*31:0*/ riscv_top__DOT__mem_writedataM;
+        IData/*31:0*/ riscv_top__DOT__alu_resultM;
+        IData/*31:0*/ riscv_top__DOT__mem_readdataM;
         IData/*31:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__PCD;
         IData/*31:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__PCPlus4D;
         IData/*31:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__ExtImmD;
@@ -97,13 +103,14 @@ VL_MODULE(Vriscv_top) {
         IData/*31:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_memory__DOT__ExtImmM;
         WData/*127:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_memory__DOT__writedata_concat[4];
         IData/*31:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_writeback__DOT__alu_resultW;
+    };
+    struct {
         IData/*31:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_writeback__DOT__mem_readdataW;
         IData/*31:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_writeback__DOT__PCPlus4W;
         IData/*31:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_writeback__DOT__PCTargetW;
         IData/*31:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_writeback__DOT__writeback_dataW;
         WData/*1023:0*/ riscv_top__DOT__u_riscv_imem__DOT__FILE_TEXT_MIF[32];
-    };
-    struct {
+        IData/*31:0*/ riscv_top__DOT__u_riscv_dmem_interface__DOT__byte_aligned_dmem_rd_data;
         WData/*1023:0*/ riscv_top__DOT__u_riscv_dmem__DOT__FILE_DATA_MIF[32];
         IData/*31:0*/ riscv_top__DOT__u_riscv_dmem__DOT__i;
         QData/*63:0*/ riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_execute__DOT__srcB_concat_data;
@@ -131,7 +138,7 @@ VL_MODULE(Vriscv_top) {
     CData/*0:0*/ __Vclklast__TOP__i_rstn;
     SData/*10:0*/ __Vtableidx4;
     IData/*31:0*/ __Vdly__riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_decode__DOT__instrD;
-    IData/*31:0*/ __Vchglast__TOP__o_mem_readdataM;
+    IData/*31:0*/ __Vchglast__TOP__riscv_top__DOT__mem_readdataM;
     CData/*0:0*/ __Vtablechg4[2048];
     CData/*0:0*/ __Vtablechg6[16];
     CData/*0:0*/ __Vm_traceActivity[4];
@@ -179,7 +186,8 @@ VL_MODULE(Vriscv_top) {
     static QData _change_request(Vriscv_top__Syms* __restrict vlSymsp);
     static QData _change_request_1(Vriscv_top__Syms* __restrict vlSymsp);
   public:
-    static void _combo__TOP__7(Vriscv_top__Syms* __restrict vlSymsp);
+    static void _combo__TOP__6(Vriscv_top__Syms* __restrict vlSymsp);
+    static void _combo__TOP__8(Vriscv_top__Syms* __restrict vlSymsp);
   private:
     void _ctor_var_reset() VL_ATTR_COLD;
   public:
@@ -195,7 +203,7 @@ VL_MODULE(Vriscv_top) {
     static void _sequent__TOP__2(Vriscv_top__Syms* __restrict vlSymsp);
     static void _sequent__TOP__3(Vriscv_top__Syms* __restrict vlSymsp);
     static void _sequent__TOP__4(Vriscv_top__Syms* __restrict vlSymsp);
-    static void _sequent__TOP__6(Vriscv_top__Syms* __restrict vlSymsp);
+    static void _sequent__TOP__7(Vriscv_top__Syms* __restrict vlSymsp);
     static void _settle__TOP__5(Vriscv_top__Syms* __restrict vlSymsp) VL_ATTR_COLD;
   private:
     static void traceChgSub0(void* userp, VerilatedVcd* tracep);
