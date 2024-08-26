@@ -26,7 +26,7 @@ module	riscv_dmem_interface(
 
 // Bypass Signal
 assign 		o_dmem_intf_addr		= i_dmem_intf_addr;
-assign		o_dmem_intf_wen			= o_dmem_intf_wen;
+assign		o_dmem_intf_wen			= i_dmem_intf_wen;
 
 // To Data Memory
 assign 		o_dmem_intf_wr_data		= i_dmem_intf_wr_data  << (8*i_dmem_intf_addr[1:0]);

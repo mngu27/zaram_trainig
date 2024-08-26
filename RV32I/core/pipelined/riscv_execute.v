@@ -45,6 +45,7 @@ module riscv_execute(
     output		[		1:0]	o_ctrl_mux_selE,
 	output 		                o_ctrl_mem_wr_enE,
 	output		[		3:0]    o_ctrl_mem_byte_selE,
+	output 	 	[	    2:0] 	o_ctrl_funct3E,
 
 	output		[       4:0]    o_regfile_rs1_addrE,
 	output		[       4:0]    o_regfile_rs2_addrE,
@@ -96,7 +97,7 @@ u_pipeline_execute(
     .i_ExtImmD				( i_ExtImmD			),
     .i_PCPlus4D				( i_PCPlus4D		),
 
-	.o_ctrl_funct3E			( ctrl_funct3E	),
+	.o_ctrl_funct3E			( o_ctrl_funct3E	),
     .o_ctrl_reg_wr_enE		( o_ctrl_reg_wr_enE	),
     .o_ctrl_result_srcE		( o_ctrl_result_srcE),
 	.o_ctrl_mux_selE		( o_ctrl_mux_selE	),
@@ -118,7 +119,6 @@ u_pipeline_execute(
     .o_PCPlus4E				( o_PCPlus4E		 )
 );
 
-	wire	[		   2:0]	ctrl_funct3E;
     wire    [    `XLEN-1:0]	SrcAE;
     wire    [    `XLEN-1:0]	SrcBE;
 
@@ -184,7 +184,7 @@ u_pipeline_execute(
 	reg take_branch;
 
 	always @ (*) begin
-		case(ctrl_funct3E)
+		case(o_ctrl_funct3E)
 			`FUNCT3_BRANCH_BEQ	   : take_branch = zeroE; 
 			`FUNCT3_BRANCH_BNE	   : take_branch = !zeroE;
 			`FUNCT3_BRANCH_BLT	   : take_branch = !zeroE;

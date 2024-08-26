@@ -17,13 +17,13 @@ module	riscv_pipelined_cpu
     input                       i_clk,
     input                       i_rstn,
     input   [`XLEN-1:0]         i_instrF,
-    input   [`XLEN-1:0]         i_mem_readdataM,
+    input   [`XLEN-1:0]        i_mem_readdataM,
     output  [`XLEN-1:0]         o_PCF,
 	output						o_ctrl_mem_wr_enM,
-    output	[	   2:0]			o_ctrl_funct3M,
-	output  [`XLEN-1:0]	        o_alu_resultM,
+    output  [`XLEN-1:0]	        o_alu_resultM,
     output	[      3:0]         o_ctrl_mem_byte_selM,
-    output  [`XLEN-1:0] 	    o_mem_writedataM
+    output  [`XLEN-1:0] 	    o_mem_writedataM,
+	output	[ `XLEN-1:0]		o_mem_readdataM
 );
 
 	wire    [`XLEN-1:0]     PCPlus4F;
@@ -105,7 +105,6 @@ module	riscv_pipelined_cpu
 	wire		[		1:0]	ctrl_mux_selE;
 	wire 		                ctrl_mem_wr_enE;
     wire        [       3:0]    ctrl_mem_byte_selE;
-	wire		[		2:0]	ctrl_funct3E;
 	wire		[       4:0]    regfile_rs1_addrE;
 	wire		[       4:0]    regfile_rs2_addrE;
 	wire        [       4:0]    regfile_rd_addrE;
@@ -115,6 +114,7 @@ module	riscv_pipelined_cpu
 	wire		[ `XLEN-1:0]	PCPlus4E;	
 	wire		[		1:0]	PCSrcE;
 	wire		[ `XLEN-1:0]	ExtImmE;
+	wire		[		2:0]	ctrl_funct3E;
 
 	riscv_execute
 	u_riscv_execute(
@@ -185,13 +185,13 @@ module	riscv_pipelined_cpu
 		.i_PCPlus4E			(PCPlus4E			),
 		.i_PCTargetE		(PCTargetE			),
 		.i_ExtImmE			(ExtImmE			),
+		.i_mem_readdataM	(i_mem_readdataM	),
 		.o_ctrl_reg_wr_enM	(ctrl_reg_wr_enM	),
 		.o_ctrl_result_srcM	(ctrl_result_srcM	),
         .o_ctrl_mem_wr_enM  (o_ctrl_mem_wr_enM),
         .o_ctrl_mem_byte_selM(o_ctrl_mem_byte_selM),
-		.o_ctrl_funct3M		(o_ctrl_funct3M		),
 		.o_alu_resultM		(o_alu_resultM		),
-		//.o_mem_readdataM	(mem_readdataM	),
+		.o_mem_readdataM	(o_mem_readdataM	),
         .o_mem_writedataM   (o_mem_writedataM),
 		.o_regfile_rd_addrM	(regfile_rd_addrM	),
 		//.o_PCPlus4M			(PCPlus4M			),
