@@ -58,7 +58,7 @@ module	riscv_pipelined_cpu
 	wire	  [     3:0]	  ctrl_mem_byte_selD;
 	wire      [     4:0]      regfile_rs1_addrD;        
 	wire      [     4:0]      regfile_rs2_addrD;
-	wire      [`XLEN-3:0]     regfile_rs1_dataD;
+	wire      [`XLEN-1:0]     regfile_rs1_dataD;
 	wire      [`XLEN-1:0]     regfile_rs2_dataD;
 	wire      [`XLEN-1:0]     ExtImmD;
 	wire	  [     4:0]	  regfile_rd_addrD;

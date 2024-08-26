@@ -59,7 +59,7 @@ pipeline_writeback
 )   u_riscv_mux_result
 (	
 	.i_mux_concat_data      ( Writeback_concat_data     ),
-	.i_mux_sel              ( i_ctrl_result_srcM        ),
+	.i_mux_sel              ( ctrl_result_srcW        ),
     .o_mux_data             ( o_regfile_rd_dataW        )
 );
 

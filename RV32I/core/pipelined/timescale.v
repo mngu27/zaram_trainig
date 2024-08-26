@@ -1,1 +1,0 @@
-/root/templates/verilog/timescale.v

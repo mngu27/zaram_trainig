@@ -116,20 +116,20 @@ VL_MODULE(Vriscv_top) {
     CData/*6:0*/ __Vtableidx1;
     CData/*6:0*/ __Vtableidx2;
     CData/*3:0*/ __Vtableidx4;
-    CData/*4:0*/ __Vtableidx5;
+    CData/*3:0*/ __Vtableidx5;
     CData/*0:0*/ __Vclklast__TOP__i_clk;
     CData/*0:0*/ __Vclklast__TOP__i_rstn;
     SData/*10:0*/ __Vtableidx3;
     IData/*31:0*/ __Vdly__riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_decode__DOT__instrD;
     IData/*31:0*/ __Vchglast__TOP__o_mem_readdataM;
     CData/*0:0*/ __Vtablechg3[2048];
-    CData/*0:0*/ __Vtablechg5[32];
+    CData/*0:0*/ __Vtablechg5[16];
     CData/*0:0*/ __Vm_traceActivity[4];
     static CData/*1:0*/ __Vtable1_riscv_top__DOT__u_riscv_pipelined_cpu__DOT__ctrl_result_srcD[128];
     static CData/*2:0*/ __Vtable2_riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_decode__DOT__ctrl_src_immD[128];
     static WData/*255:0*/ __Vtable3_riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_decode__DOT__u_riscv_ctrl__DOT__DEBUG_INSTR[2048][8];
     static CData/*0:0*/ __Vtable4_riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_execute__DOT__take_branch[16];
-    static QData/*63:0*/ __Vtable5_riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_execute__DOT__u_riscv_alu__DOT__DEBUG_ALU_OP[32];
+    static QData/*63:0*/ __Vtable5_riscv_top__DOT__u_riscv_pipelined_cpu__DOT__u_riscv_execute__DOT__u_riscv_alu__DOT__DEBUG_ALU_OP[16];
     
     // INTERNAL VARIABLES
     // Internals; generally not touched by application code
