@@ -25,8 +25,7 @@ module riscv_decode (
 	
 	output 	 	[	   2:0] 	o_ctrl_funct3D,
 	output			            o_ctrl_reg_wr_enD,
-    output	      				o_ctrl_result_srcD,
-	output		[	   1:0]		o_ctrl_mux_selD,
+    output	    [     1:0]	    o_ctrl_result_srcD,
 	output			            o_ctrl_mem_wr_enD,
     output                      o_ctrl_jalD,
     output                      o_ctrl_jalrD,
@@ -77,7 +76,6 @@ u_riscv_ctrl(
 
 	.o_ctrl_reg_wr_en       (   o_ctrl_reg_wr_enD   ),
     .o_ctrl_result_src      (   o_ctrl_result_srcD  ),
-	.o_ctrl_mux_sel			( 	o_ctrl_mux_selD		),
 	.o_ctrl_mem_wr_en       (   o_ctrl_mem_wr_enD   ),
     .o_ctrl_jal             (   o_ctrl_jalD         ),
     .o_ctrl_jalr            (   o_ctrl_jalrD        ),
@@ -107,4 +105,4 @@ riscv_immext
 		.o_imm_ext			(   o_ExtImmD			)
 	);
 
-	endmodule
+endmodule

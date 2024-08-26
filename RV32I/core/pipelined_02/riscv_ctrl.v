@@ -8,8 +8,7 @@ module	riscv_ctrl(
 	input				i_ctrl_funct7_5b,
 
 	output reg			o_ctrl_reg_wr_en,
-    output reg			o_ctrl_result_src,
-	output reg	[1:0]	o_ctrl_mux_sel,
+    output reg	[1:0]	o_ctrl_result_src,
 	output reg			o_ctrl_mem_wr_en,
     output reg          o_ctrl_jal,
     output reg          o_ctrl_jalr,
@@ -30,30 +29,13 @@ always @(*) begin
 end 
 
 /// Result Select ///
-// always @(*) begin
-// 	case(i_ctrl_opcode) 
-//         `OPCODE_I_LOAD		: o_ctrl_result_src = `SRC_RD_DME;
-//         `OPCODE_J_JAL		: o_ctrl_result_src = `SRC_RD_PC4;
-//         `OPCODE_I_JALR		: o_ctrl_result_src = `SRC_RD_PC4;
-// 		`OPCODE_U_LUI		: o_ctrl_result_src	= `SRC_RD_IMM;
-//         default     		: o_ctrl_result_src = `SRC_RD_ALU;
-// 	endcase
-// end 
-
-	always @(*) begin 
-		case(i_ctrl_opcode)
-			`OPCODE_I_LOAD	: 	o_ctrl_result_src 	= 1'b0;		
-			default			: 	o_ctrl_result_src	= 1'b1; 	 	
-		endcase 
-	end
-
-	always @(*) begin 
-		case(i_ctrl_opcode)
-			`OPCODE_U_LUI	: 	o_ctrl_mux_sel		= 2'b01;
-			`OPCODE_U_AUIPC	:	o_ctrl_mux_sel		= 2'b10;
-			`OPCODE_J_JAL	,
-			`OPCODE_I_JALR	: 	o_ctrl_mux_sel		= 2'b11;
-		default				: 	o_ctrl_mux_sel		= 2'b00;
+always @(*) begin
+	case(i_ctrl_opcode) 
+        `OPCODE_I_LOAD		: o_ctrl_result_src = `SRC_RD_DME;
+        `OPCODE_J_JAL		: o_ctrl_result_src = `SRC_PC_PC_4;
+        `OPCODE_I_JALR		: o_ctrl_result_src = `SRC_PC_PC_4;
+		`OPCODE_U_LUI		: o_ctrl_result_src	= `SRC_RD_IMM;
+        default     		: o_ctrl_result_src = `SRC_RD_ALU;
 	endcase
 end 
 
@@ -141,9 +123,6 @@ always @(*) begin
 	case(i_ctrl_opcode)
         `OPCODE_R_OP	    : o_ctrl_alu_src    = 1'b0;
 		`OPCODE_B_BRANCH	: o_ctrl_alu_src	= 1'b0;
-		//`OPCODE_J_JAL		: o_ctrl_alu_src	= 1'b0;
-		//`OPCODE_U_LUI		: o_ctrl_alu_src	= 1'b0;
-		//`OPCODE_U_AUIPC		: o_ctrl_alu_src	= 1'b0;
         default             : o_ctrl_alu_src    = 1'b1;
     endcase
 end

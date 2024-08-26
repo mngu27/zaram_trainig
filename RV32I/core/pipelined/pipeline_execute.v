@@ -9,7 +9,8 @@ module pipeline_execute(
     input                       i_clear,
 
     input                       i_ctrl_reg_wr_enD,
-    input       [       1:0]    i_ctrl_result_srcD,
+    input           			i_ctrl_result_srcD,
+	input		[		1:0]	i_ctrl_mux_selD,
     input                       i_ctrl_mem_wr_enD,
     input                       i_ctrl_jalD,
     input                       i_ctrl_jalrD,
@@ -31,8 +32,9 @@ module pipeline_execute(
 
 	output reg 	[	    2:0] 	o_ctrl_funct3E,
     output reg                  o_ctrl_reg_wr_enE,
-    output reg  [       1:0]    o_ctrl_result_srcE,
-    output reg                  o_ctrl_mem_wr_enE,
+    output reg      			o_ctrl_result_srcE,
+    output reg	[		1:0]	o_ctrl_mux_selE,
+	output reg                  o_ctrl_mem_wr_enE,
     output reg                  o_ctrl_jalE,
     output reg                  o_ctrl_jalrE,
     output reg                  o_ctrl_branchE,
@@ -55,7 +57,8 @@ module pipeline_execute(
         if((~i_rstn) || i_clear) begin
             o_ctrl_reg_wr_enE       <= 0;
             o_ctrl_result_srcE      <= 0;
-            o_ctrl_mem_wr_enE       <= 0;
+            o_ctrl_mux_selE			<= 0;
+			o_ctrl_mem_wr_enE       <= 0;
             o_ctrl_jalE             <= 0;
             o_ctrl_jalrE            <= 0;
             o_ctrl_branchE          <= 0;
@@ -75,7 +78,8 @@ module pipeline_execute(
         else begin
             o_ctrl_reg_wr_enE       <= i_ctrl_reg_wr_enD      ;
             o_ctrl_result_srcE      <= i_ctrl_result_srcD     ;
-            o_ctrl_mem_wr_enE       <= i_ctrl_mem_wr_enD      ;
+            o_ctrl_mux_selE			<= i_ctrl_mux_selD		  ;
+			o_ctrl_mem_wr_enE       <= i_ctrl_mem_wr_enD      ;
             o_ctrl_jalE             <= i_ctrl_jalD            ;
             o_ctrl_jalrE            <= i_ctrl_jalrD           ;
             o_ctrl_branchE          <= i_ctrl_branchD         ;

@@ -11,8 +11,9 @@ module riscv_execute(
     input                       i_rstn,
     
 	input                       i_ctrl_reg_wr_enD,
-    input       [       1:0]    i_ctrl_result_srcD,
-    input                       i_ctrl_mem_wr_enD,
+    input       				i_ctrl_result_srcD,
+    input		[		1:0]	i_ctrl_mux_selD,
+	input                       i_ctrl_mem_wr_enD,
     input                       i_ctrl_jalD,
     input                       i_ctrl_jalrD,
     input                       i_ctrl_branchD,
@@ -35,13 +36,14 @@ module riscv_execute(
 	input		[		1:0]	i_hazard_forwardBE,
 	input						i_hazard_flushE,
 
-	input		[ `XLEN-1:0]	i_alu_resultM,
+	input		[ `XLEN-1:0]	i_writeback_dataM,
 	input		[ `XLEN-1:0]	i_regfile_rd_dataW,
 
 
     output 		                o_ctrl_reg_wr_enE,
-    output 		[       1:0]    o_ctrl_result_srcE,
-    output 		                o_ctrl_mem_wr_enE,
+    output 		    			o_ctrl_result_srcE,
+    output		[		1:0]	o_ctrl_mux_selE,
+	output 		                o_ctrl_mem_wr_enE,
 	output		[		3:0]    o_ctrl_mem_byte_selE,
 
 	output		[       4:0]    o_regfile_rs1_addrE,
@@ -51,6 +53,7 @@ module riscv_execute(
 	output		[ `XLEN-1:0]    o_alu_resultE,
 	output		[ `XLEN-1:0]	o_mem_writedataE,
 
+	output		[ `XLEN-1:0]	o_ExtImmE,
 	output		[ `XLEN-1:0]	o_PCTargetE,
 	output		[ `XLEN-1:0]	o_PCPlus4E,	
 	output		[		1:0]	o_PCSrcE
@@ -64,7 +67,6 @@ module riscv_execute(
 	wire  [ `XLEN-1:0]    regfile_rs1_dataE;
     wire  [ `XLEN-1:0]    regfile_rs2_dataE;
 	wire  [ `XLEN-1:0]    PCE;
-	wire  [ `XLEN-1:0]    ExtImmE;
 
 
 pipeline_execute
@@ -75,6 +77,7 @@ u_pipeline_execute(
 
     .i_ctrl_reg_wr_enD		( i_ctrl_reg_wr_enD	),
     .i_ctrl_result_srcD		( i_ctrl_result_srcD),
+	.i_ctrl_mux_selD		( i_ctrl_mux_selD	),
     .i_ctrl_mem_wr_enD		( i_ctrl_mem_wr_enD	),
     .i_ctrl_jalD			( i_ctrl_jalD		),
     .i_ctrl_jalrD			( i_ctrl_jalrD		),
@@ -96,6 +99,7 @@ u_pipeline_execute(
 	.o_ctrl_funct3E			( ctrl_funct3E	),
     .o_ctrl_reg_wr_enE		( o_ctrl_reg_wr_enE	),
     .o_ctrl_result_srcE		( o_ctrl_result_srcE),
+	.o_ctrl_mux_selE		( o_ctrl_mux_selE	),
     .o_ctrl_mem_wr_enE		( o_ctrl_mem_wr_enE	),
     .o_ctrl_jalE			( ctrl_jalE			),
     .o_ctrl_jalrE			( ctrl_jalrE		),
@@ -110,7 +114,7 @@ u_pipeline_execute(
     .o_regfile_rs2_addrE	( o_regfile_rs2_addrE),
     .o_regfile_rd_addrE		( o_regfile_rd_addrE ),
     .o_PCE					( PCE				 ),
-    .o_ExtImmE				( ExtImmE			 ),
+    .o_ExtImmE				( o_ExtImmE			 ),
     .o_PCPlus4E				( o_PCPlus4E		 )
 );
 
@@ -122,9 +126,9 @@ u_pipeline_execute(
 	wire	[(3*`XLEN)-1:0]	writedata_concat;
     wire    [(2*`XLEN)-1:0] srcB_concat_data;
    
-    assign srcA_concat_data	= {i_alu_resultM, i_regfile_rd_dataW, regfile_rs1_dataE};
-    assign writedata_concat	= {i_alu_resultM, i_regfile_rd_dataW, regfile_rs2_dataE};
-    assign srcB_concat_data = {ExtImmE, o_mem_writedataE};
+    assign srcA_concat_data	= {i_writeback_dataM, i_regfile_rd_dataW, regfile_rs1_dataE};
+    assign writedata_concat	= {i_writeback_dataM, i_regfile_rd_dataW, regfile_rs2_dataE};
+    assign srcB_concat_data = {o_ExtImmE, o_mem_writedataE};
 
     ////// Hazard ///////
     riscv_mux
@@ -162,7 +166,7 @@ u_pipeline_execute(
     riscv_adder
 	u_riscv_adder_pc_plus_imm(
 		.i_adder_a			( PCE			),
-		.i_adder_b			( ExtImmE			),
+		.i_adder_b			( o_ExtImmE			),
 		.o_adder_sum		( o_PCTargetE		)
 	);
 

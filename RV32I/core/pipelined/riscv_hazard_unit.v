@@ -12,7 +12,7 @@ module hazard_unit(
     input       [       4:0]    i_regfile_rs1_addrD,
     input       [       4:0]    i_regfile_rs2_addrD,
     input       [       4:0]    i_regfile_rd_addrE,
-    input       [       1:0]        i_ctrl_result_srcE,
+    input              			i_ctrl_result_srcE,
 
     // Control hazard flush
     input        [      1:0]    i_PCSrcE,
@@ -49,7 +49,7 @@ always @(*) begin
 end
 
 
-assign lwStall = (((i_regfile_rs1_addrD == i_regfile_rd_addrE) || (i_regfile_rs2_addrD == i_regfile_rd_addrE)) && (i_ctrl_result_srcE == 2'b01));
+assign lwStall = (((i_regfile_rs1_addrD == i_regfile_rd_addrE) || (i_regfile_rs2_addrD == i_regfile_rd_addrE)) && (i_ctrl_result_srcE));
 
 always @(*) begin
     o_hazard_stallF  = lwStall;

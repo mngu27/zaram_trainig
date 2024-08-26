@@ -14,13 +14,11 @@ module pipeline_writeback(
     input		[ `XLEN-1:0]	i_PCPlus4M,	
     input       [       4:0]    i_regfile_rd_addrM,
 	input		[ `XLEN-1:0]	i_PCTargetM,
-	input		[ `XLEN-1:0]	i_writeback_dataM,
 
     output reg                  o_ctrl_reg_wr_enW,
     output reg  [       1:0]    o_ctrl_result_srcW,
     output reg	[ `XLEN-1:0]	o_alu_resultW,
     output reg	[ `XLEN-1:0]	o_mem_readdataW,
-	output reg  [ `XLEN-1:0]	o_writeback_dataW,
     output reg	[ `XLEN-1:0]	o_PCPlus4W,
 	output reg  [ `XLEN-1:0] 	o_PCTargetW,
     output reg  [       4:0]    o_regfile_rd_addrW
@@ -33,7 +31,6 @@ module pipeline_writeback(
             o_alu_resultW       <= 0;
             o_mem_readdataW     <= 0;
             o_PCPlus4W          <= 0;
-			o_writeback_dataW	<= 0;
             o_regfile_rd_addrW  <= 0;
 			o_PCTargetW			<= 0;
         end
@@ -43,8 +40,7 @@ module pipeline_writeback(
             o_alu_resultW       <= i_alu_resultM;
             o_mem_readdataW     <= i_mem_readdataM;
             o_PCPlus4W          <= i_PCPlus4M;          
-            o_writeback_dataW	<= i_writeback_dataM;
-			o_regfile_rd_addrW  <= i_regfile_rd_addrM;   
+            o_regfile_rd_addrW  <= i_regfile_rd_addrM;   
 			o_PCTargetW			<= i_PCTargetM;
             end
     end

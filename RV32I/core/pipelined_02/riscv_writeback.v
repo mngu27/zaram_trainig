@@ -15,7 +15,6 @@ module riscv_writeback(
     input		[ `XLEN-1:0]	i_PCPlus4M,	
     input       [       4:0]    i_regfile_rd_addrM,
 	input		[ `XLEN-1:0]	i_PCTargetM,
-	input		[ `XLEN-1:0]	i_writeback_dataM,
 
     output                      o_ctrl_reg_wr_enW,
     output      [       4:0]    o_regfile_rd_addrW,
@@ -27,7 +26,6 @@ module riscv_writeback(
     wire    	[ `XLEN-1:0]	mem_readdataW;
     wire    	[ `XLEN-1:0]	PCPlus4W;
 	wire		[ `XLEN-1:0]	PCTargetW;
-	wire 		[ `XLEN-1:0]	writeback_dataW;
 
 
 pipeline_writeback
@@ -42,7 +40,6 @@ pipeline_writeback
         .i_PCPlus4M             ( i_PCPlus4M            ),
 		.i_PCTargetM			( i_PCTargetM			),
         .i_regfile_rd_addrM     ( i_regfile_rd_addrM    ),
-		.i_writeback_dataM		( i_writeback_dataM		),
 
         .o_ctrl_reg_wr_enW      ( o_ctrl_reg_wr_enW     ),
         .o_ctrl_result_srcW     ( ctrl_result_srcW      ),
@@ -50,16 +47,15 @@ pipeline_writeback
         .o_mem_readdataW        ( mem_readdataW         ),
         .o_PCPlus4W             ( PCPlus4W              ),
 		.o_PCTargetW			( PCTargetW				),
-        .o_regfile_rd_addrW     ( o_regfile_rd_addrW    ),
-		.o_writeback_dataW		( writeback_dataW		)
+        .o_regfile_rd_addrW     ( o_regfile_rd_addrW    )
     );
 
-    wire    [(2*`XLEN)-1:0]         Writeback_concat_data;
-    assign  Writeback_concat_data = {mem_readdataW, writeback_dataW};
+    wire    [(4*`XLEN)-1:0]         Writeback_concat_data;
+    assign  Writeback_concat_data = {PCTargetW, PCPlus4W, mem_readdataW, alu_resultW};
 
     riscv_mux
 #(
-	.N_MUX_IN               ( 2                        ) 
+	.N_MUX_IN               ( 4                         ) 
 )   u_riscv_mux_result
 (	
 	.i_mux_concat_data      ( Writeback_concat_data     ),
